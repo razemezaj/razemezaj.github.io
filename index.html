@@ -31,7 +31,7 @@
         .banner p { font-size: clamp(1rem, 3vw, 1.25rem); }
         section { padding: 3rem 0; }
         .section-title { font-size: 1.75rem; color: var(--green-main); margin-bottom: 1rem; text-align: center; }
-        .about, .services, .blog, .contact { background: #fff; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.1); padding: 2rem; margin-bottom: 2rem; }
+        .about, .services, .blog, .contact, .poster { background: #fff; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.1); padding: 2rem; margin-bottom: 2rem; }
         .services .card { background: var(--green-soft); padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem; }
         .blog .posts { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 1.5rem; }
         .blog .post { background: var(--bg-cream); padding: 1rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
@@ -39,6 +39,26 @@
         input, textarea { padding: 0.75rem; border: 1px solid var(--green-main); border-radius: 6px; font-family: "Vazirmatn", sans-serif; }
         button { background: var(--gold); color: #000; padding: 0.75rem; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; }
         footer { text-align: center; padding: 1.5rem 0; color: var(--brown); font-size: 0.9rem; }
+        /* Poster Styles */
+        .poster { background: 
+            linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+            url('https://dosinshop.com/wp-content/uploads/2024/07/%D8%B7%D8%A8-%D8%B3%D9%86%D8%AA%DB%8C-1.jpg') no-repeat center center;
+            background-size: cover;
+            border: 5px solid var(--gold);
+            border-radius: 24px;
+            overflow: hidden;
+            padding: 2.5rem 1.75rem;
+            color: #fff;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
+        }
+        .poster .content { display: flex; flex-direction: column; gap: 1.25rem; position: relative; }
+        .poster .title { font-weight: 700; font-size: clamp(1.6rem,4vw,2.4rem); text-align: center; line-height: 1.4; }
+        .poster .subtitle { font-weight: 700; color: #ffd700; font-size: 1.3rem; margin-bottom: .25rem; }
+        .poster .box { background: rgba(0,0,0,0.5); padding: 1.25rem 1rem; border-radius: 16px; box-shadow: 0 3px 8px rgba(0,0,0,.3); }
+        .poster ul { list-style-type: "✔ "; padding-right: 1rem; }
+        .poster .cta { background: var(--gold); color: #000; text-align: center; padding: 1rem 0 .75rem; border-radius: 12px; font-weight: 700; font-size: clamp(1.1rem,3vw,1.35rem); }
+        .poster .cta span { display: block; font-size: clamp(1.5rem,5vw,2rem); margin-top: .4rem; }
+        @media(max-width:550px){ .poster .box{ padding:1rem .8rem } }
     </style>
 </head>
 <body>
@@ -49,6 +69,7 @@
             <a href="#services">خدمات</a>
             <a href="#blog">بلاگ</a>
             <a href="#contact">تماس با ما</a>
+            <a href="#poster">پوستر دوره</a>
         </nav>
     </header>
 
@@ -61,10 +82,55 @@
             </div>
         </section>
 
+        <!-- Poster Section -->
+        <section id="poster" class="poster">
+            <div class="content">
+                <h1 class="title">مؤسسه جامعه‌الثقلین تقدیم می‌کند</h1>
+                <h2 class="title">دوره جامع آشنایی با طب سنتی و روش‌های طبیعی درمان</h2>
+
+                <div class="box">
+                    <h2 class="subtitle">خلاصه مشخصات دوره:</h2>
+                    <ul>
+                        <li>نام دوره: آشنایی جامع با طب سنتی و روش‌های طبیعی درمان</li>
+                        <li>مدرس: سرکار خانم مژگان احمدی</li>
+                        <li>روزهای برگزاری: شنبه و سه‌شنبه</li>
+                        <li>ساعت: ۹ تا ۱۲ صبح</li>
+                        <li>شروع دوره: از ۱ شهریور</li>
+                        <li>محل برگزاری: مؤسسه جامعه‌الثقلین</li>
+                        <li>شهریه: ۳ میلیون تومان</li>
+                        <li>گواهی پایان دوره: با مهر معتبر مؤسسه</li>
+                    </ul>
+                </div>
+
+                <div class="box">
+                    <h2 class="subtitle">سرفصل‌ها:</h2>
+                    <ul>
+                        <li>آشنایی با طب سنتی و مزاج‌ها</li>
+                        <li>تشخیص مزاج خود و اطرافیان</li>
+                        <li>تغذیه مناسب مزاج‌ها</li>
+                        <li>اخلاط چهارگانه و بیماری‌ها</li>
+                        <li>آموزش عملی بادکش، زالودرمانی و حجامت</li>
+                    </ul>
+                </div>
+                <div class="box">
+                    <h2 class="subtitle">مخاطب :</h2>
+                    <ul>
+                        <li>خانم‌های خانه‌دار و بانوان علاقمند به طب سنتی و درمان طبیعی خانواده</li>
+                    </ul>
+                </div>
+
+                <div class="cta">
+                    ظرفیت محدود – اولویت با ثبت‌نام زودهنگام
+                    <span>08634220170 - 08634220190</span>
+                </div>
+            </div>
+        </section>
+
         <!-- About -->
         <section id="about" class="about">
             <h2 class="section-title">درباره ما</h2>
-            <p>سایت "راز مزاج" با مدیریت خانم [نام خواهر]، ارائه‌دهنده مقالات، مشاوره و محصولات گیاهی برای حفظ سلامتی و تندرستی شماست. با بهره‌گیری از دانش طب سنتی، ما مسیر درست را به شما نشان می‌دهیم.</p>
+            <p>سایت "راز مزاج" با مدیریت خانم [نام خواهر]، ارائه‌دهنده مقالات، مشاوره و محصولات گیاهی برای حفظ سلامتی و تندرستی شماست. با بهره‌گیری از دانش طب سنتی، ما مسیر درست را به شما نشان می‌دهیم.
+                </p>
         </section>
 
         <!-- Services -->
@@ -86,7 +152,7 @@
 
         <!-- Blog -->
         <section id="blog" class="blog">
-            <h2 class="section-title">مقالات ما</n2>
+            <h2 class="section-title">مقالات ما</h2>
             <div class="posts">
                 <div class="post">
                     <h4>تشخیص مزاج و اهمیت آن</h4>
@@ -100,6 +166,7 @@
                 </div>
                 <div class="post">
                     <h4>روش‌های طبیعی درمان سردرد</h4>
+                    
                     <p>متن خلاصه مقاله...</p>
                     <a href="#">ادامه مطلب</a>
                 </div>
