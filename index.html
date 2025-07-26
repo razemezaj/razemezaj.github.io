@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>راز مزاج</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --green-main: #0D5E2A;
+            --green-soft: #A6D5A6;
+            --bg-cream: #FFF9F1;
+            --gold: #B4881D;
+            --brown: #8B5A2B;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: "Vazirmatn", sans-serif;
+            background: var(--bg-cream);
+            color: var(--green-main);
+            line-height: 1.6;
+            direction: rtl;
+        }
+        header, nav, main, footer { width: 90%; max-width: 1200px; margin: auto; }
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; }
+        nav a { color: var(--green-main); text-decoration: none; margin: 0 0.75rem; font-weight: 700; }
+        .banner { background: url('banner-image.jpg') center/cover no-repeat; height: 60vh; display: flex; align-items: center; justify-content: center; text-align: center; color: #fff; position: relative; }
+        .banner::before { content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); }
+        .banner .intro { position: relative; z-index: 1; }
+        .banner h1 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 0.5rem; }
+        .banner p { font-size: clamp(1rem, 3vw, 1.25rem); }
+        section { padding: 3rem 0; }
+        .section-title { font-size: 1.75rem; color: var(--green-main); margin-bottom: 1rem; text-align: center; }
+        .about, .services, .blog, .contact { background: #fff; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.1); padding: 2rem; margin-bottom: 2rem; }
+        .services .card { background: var(--green-soft); padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem; }
+        .blog .posts { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 1.5rem; }
+        .blog .post { background: var(--bg-cream); padding: 1rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        form { display: flex; flex-direction: column; gap: 1rem; }
+        input, textarea { padding: 0.75rem; border: 1px solid var(--green-main); border-radius: 6px; font-family: "Vazirmatn", sans-serif; }
+        button { background: var(--gold); color: #000; padding: 0.75rem; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; }
+        footer { text-align: center; padding: 1.5rem 0; color: var(--brown); font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="#home">خانه</a>
+            <a href="#about">درباره ما</a>
+            <a href="#services">خدمات</a>
+            <a href="#blog">بلاگ</a>
+            <a href="#contact">تماس با ما</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Banner -->
+        <section id="home" class="banner">
+            <div class="intro">
+                <h1>راز مزاج</h1>
+                <p>کشف تعادل درونی با روش‌های طب سنتی</p>
+            </div>
+        </section>
+
+        <!-- About -->
+        <section id="about" class="about">
+            <h2 class="section-title">درباره ما</h2>
+            <p>سایت "راز مزاج" با مدیریت خانم [نام خواهر]، ارائه‌دهنده مقالات، مشاوره و محصولات گیاهی برای حفظ سلامتی و تندرستی شماست. با بهره‌گیری از دانش طب سنتی، ما مسیر درست را به شما نشان می‌دهیم.</p>
+        </section>
+
+        <!-- Services -->
+        <section id="services" class="services">
+            <h2 class="section-title">خدمات ما</h2>
+            <div class="card">
+                <h3>مشاوره آنلاین مزاج‌شناسی</h3>
+                <p>تشخیص مزاج و ارائه برنامه غذایی و درمانی اختصاصی.</p>
+            </div>
+            <div class="card">
+                <h3>فروش محصولات گیاهی</h3>
+                <p>ارسال انواع گیاهان دارویی و ترکیبات آماده با ضمانت کیفیت.</p>
+            </div>
+            <div class="card">
+                <h3>کارگاه‌های آموزشی</h3>
+                <p>برگزاری دوره‌های عملی طب سنتی، حجامت و زالو درمانی.</p>
+            </div>
+        </section>
+
+        <!-- Blog -->
+        <section id="blog" class="blog">
+            <h2 class="section-title">مقالات ما</n2>
+            <div class="posts">
+                <div class="post">
+                    <h4>تشخیص مزاج و اهمیت آن</h4>
+                    <p>متن خلاصه مقاله...</p>
+                    <a href="#">ادامه مطلب</a>
+                </div>
+                <div class="post">
+                    <h4>خواص گیاهان دارویی پرکاربرد</h4>
+                    <p>متن خلاصه مقاله...</p>
+                    <a href="#">ادامه مطلب</a>
+                </div>
+                <div class="post">
+                    <h4>روش‌های طبیعی درمان سردرد</h4>
+                    <p>متن خلاصه مقاله...</p>
+                    <a href="#">ادامه مطلب</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section id="contact" class="contact">
+            <h2 class="section-title">تماس با ما</h2>
+            <form action="#" method="post">
+                <input type="text" name="name" placeholder="نام و نام خانوادگی" required>
+                <input type="email" name="email" placeholder="ایمیل" required>
+                <input type="tel" name="phone" placeholder="شماره تماس" required>
+                <textarea name="message" rows="5" placeholder="پیام شما" required></textarea>
+                <button type="submit">ارسال پیام</button>
+            </form>
+            <p style="text-align:center; margin-top:1rem;">تلفن: ۰۸۶۳۴۲۲۰۱۷۰ - ۰۸۶۳۴۲۲۰۱۹۰</p>
+        </section>
+    </main>
+
+    <footer>
+        &copy; ۲۰۲۵ راز مزاج. تمامی حقوق محفوظ است.
+    </footer>
+</body>
+</html>
