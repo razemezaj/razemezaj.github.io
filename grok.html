@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تست تشخیص مزاج</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Vazirmatn', sans-serif;
+    }
+    .question-card {
+      transition: all 0.3s ease;
+    }
+    .question-card:hover {
+      transform: translateY(-2px);
+    }
+    .option-label {
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .option-label:hover {
+      background-color: #f0f4f8;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center py-8">
+  <div class="container max-w-3xl mx-auto px-4">
+    <h1 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-6">تست تشخیص مزاج بر اساس طب سنتی ایرانی</h1>
+    <p class="text-lg text-gray-600 text-center mb-8">لطفاً برای هر سؤال، گزینه‌ای که بیشترین تطابق را با وضعیت شما دارد انتخاب کنید.</p>
+
+    <form id="quiz-form" class="space-y-6">
+      <!-- دسته اول: ویژگی‌های ظاهری و فیزیکی -->
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-2xl font-semibold text-gray-700 mb-4">دسته اول: ویژگی‌های ظاهری و فیزیکی</h2>
+        <div class="space-y-4">
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۱. رنگ پوست بدن شما به طور کلی چگونه است؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q1" value="دموی" class="ml-2" required> الف) سرخ‌وسفید و گُلگون (چهره برافروخته و خون‌دار)
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q1" value="صفراوی" class="ml-2"> ب) متمایل به زرد یا گندمگونِ روشن (رنگ صورت به زردی گراییده است)
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q1" value="بلغمی" class="ml-2"> ج) روشن و کم‌رنگ (سفید مایل به مهتابی و بی‌حال)
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q1" value="سوداوی" class="ml-2"> د) سبزه‌ی تیره و مات (رنگ پوست تیره و کدر)
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۲. رنگ موی سر شما در دوران کودکی و نوجوانی چه بوده است؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q2" value="دموی" class="ml-2" required> الف) مشکی معمولی یا خرمایی پررنگ (قهوه‌ای تیره)
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q2" value="صفراوی" class="ml-2"> ب) مشکی پرکلاغی (کاملاً سیاه و پررنگ)
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q2" value="بلغمی" class="ml-2"> ج) خرمایی روشن یا بور (رنگ موهای روشن و طلایی)
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q2" value="سوداوی" class="ml-2"> د) مشکی مات و کدر (مشکی مایل به خاکستری و غیر‌براق)
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۳. حالت و جنس موهای سر شما چگونه است؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q3" value="دموی" class="ml-2" required> الف) حالت موها معمولی است (نه کاملاً لخت و نه خیلی فِر)
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q3" value="صفراوی" class="ml-2"> ب) موهای بسیار مجعدی دارید (دارای فِرهای درشت و حلقه‌حلقه)
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q3" value="بلغمی" class="ml-2"> ج) موهای شما کاملاً صاف و لَخت است
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q3" value="سوداوی" class="ml-2"> د) موهای موج‌دار با فِر ریز دارید (مجعد با حلقه‌های کوچک و ریز)
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۴. زمانی که پوست بدن خود را لمس می‌کنید، حرارت و رطوبت آن را چگونه احساس می‌کنید؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q4" value="دموی" class="ml-2" required> الف) پوست بدنم گرم است و حالت نرمی و تری دارد
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q4" value="صفراوی" class="ml-2"> ب) گرم است ولی کمی زبری و خشکی در آن حس می‌شود
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q4" value="بلغمی" class="ml-2"> ج) خنک بوده و نسبتاً نرم و مرطوب است
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q4" value="سوداوی" class="ml-2"> د) خنک بوده و همراه با خشکی و سفتی می‌باشد
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۵. هیکل و جثه‌ی بدن شما چگونه توصیف می‌شود؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q5" value="دموی" class="ml-2" required> الف) درشت‌اندام و عضلانی هستم و به هیچ وجه فرد لاغری محسوب نمی‌شوم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q5" value="صفراوی" class="ml-2"> ب) اندامی نسبتاً لاغر و قدبلند دارم و استخوان‌ها و مفاصلم تا حدی نمایان است
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q5" value="بلغمی" class="ml-2"> ج) جثه‌ای چاق و پرچربی دارم و پوستم نرم و سفید است
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q5" value="سوداوی" class="ml-2"> د) اندام من بسیار لاغر و کم‌گوشت است و چهره‌ام نسبتاً تیره و تکیده می‌باشد
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۶. وضعیت تعریق بدن (عرق کردن) شما چگونه است؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q6" value="دموی" class="ml-2" required> الف) زیاد عرق می‌کنم و بدن گرمی دارم که با فعالیت به سرعت عرق می‌کند
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q6" value="صفراوی" class="ml-2"> ب) چندان عرق نمی‌کنم و پوستم نسبتاً خشک است
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q6" value="بلغمی" class="ml-2"> ج) تعریق بدنم زیاد است و در هوای گرم گاهی دچار عرق سرد می‌شوم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q6" value="سوداوی" class="ml-2"> د) به ندرت عرق می‌کنم و پوستم اغلب خشک و سرد باقی می‌ماند
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۷. الگوی خواب و بیداری شما چگونه است؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q7" value="دموی" class="ml-2" required> الف) خوابم کافی و راحت است (حدود ۷–۸ ساعت در شبانه‌روز)
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q7" value="صفراوی" class="ml-2"> ب) خوابم بسیار کم و سبک است و معمولاً کمتر از نیاز بدن می‌خوابم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q7" value="بلغمی" class="ml-2"> ج) خواب زیادی دارم (بیش از حد معمول) و خوابم سنگین است
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q7" value="سوداوی" class="ml-2"> د) خوابم در حد طبیعی است اما به خاطر فکر و خیال زیاد گاهی دچار کم‌خوابی می‌شوم
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۸. وزن بدن و تغییرات آن چگونه است؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q8" value="دموی" class="ml-2" required> الف) وزن متعادلی دارم و هیکلم نسبتاً پُر و عضلانی است
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q8" value="صفراوی" class="ml-2"> ب) سوخت‌وساز بدنم بالا است و چندان چاق نمی‌شوم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q8" value="بلغمی" class="ml-2"> ج) استعداد چاقی دارم و در صورت پرخوری به سرعت وزن اضافه می‌کنم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q8" value="سوداوی" class="ml-2"> د) افزایش وزن برایم دشوار است و اغلب لاغر باقی می‌مانم
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۹. سطح انرژی و میزان جنب‌وجوش بدنی شما چگونه است؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q9" value="دموی" class="ml-2" required> الف) بسیار پرانرژی و سرحال هستم و کارها را با سرعت و نشاط انجام می‌دهم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q9" value="صفراوی" class="ml-2"> ب) پرتحرک و عجول هستم و انرژی زیادی دارم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q9" value="بلغمی" class="ml-2"> ج) کم‌انرژی و کم‌تحرک هستم و زود خسته می‌شوم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q9" value="سوداوی" class="ml-2"> د) انرژی چندانی ندارم و سریع احساس خستگی و بی‌حالی می‌کنم
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۱۰. احساس تشنگی و میزان نوشیدن آب در شما چگونه است؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q10" value="دموی" class="ml-2" required> الف) میزان تشنگی من معمولی است
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q10" value="صفراوی" class="ml-2"> ب) اغلب اوقات احساس تشنگی شدیدی دارم و آب زیادی می‌نوشم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q10" value="بلغمی" class="ml-2"> ج) معمولاً خیلی تشنه نمی‌شوم و نیاز زیادی به نوشیدن آب احساس نمی‌کنم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q10" value="سوداوی" class="ml-2"> د) زیاد احساس تشنگی ندارم اما دهانم غالباً خشک است
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- دسته دوم: ویژگی‌های روانی و رفتاری -->
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-2xl font-semibold text-gray-700 mb-4">دسته دوم: ویژگی‌های روانی و رفتاری</h2>
+        <div class="space-y-4">
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۱۱. واکنش شما هنگام عصبانیت چگونه است؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q11" value="دموی" class="ml-2" required> الف) سریع عصبانی می‌شوم اما زود هم آرام می‌گیرم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q11" value="صفراوی" class="ml-2"> ب) با شدت و تندی عصبی می‌شوم و گاهی پرخاشگر می‌شوم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q11" value="بلغمی" class="ml-2"> ج) به‌ندرت عصبانی می‌شوم و سعی می‌کنم کنترل‌شده رفتار کنم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q11" value="سوداوی" class="ml-2"> د) ناراحتی‌ها را درون خودم نگه می‌دارم و به‌صورت پنهانی می‌رنجم
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۱۲. نوع تصمیم‌گیری شما بیشتر چگونه است؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q12" value="دموی" class="ml-2" required> الف) بیشتر بر پایه احساس و معاشرت تصمیم می‌گیرم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q12" value="صفراوی" class="ml-2"> ب) تصمیماتم سریع، قاطع و معمولاً بدون مشورت است
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q12" value="بلغمی" class="ml-2"> ج) اغلب تصمیم‌گیری‌ها را به تعویق می‌اندازم یا به دیگران واگذار می‌کنم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q12" value="سوداوی" class="ml-2"> د) زیاد فکر می‌کنم و تجزیه‌وتحلیل می‌کنم، سپس تصمیم می‌گیرم
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۱۳. تعامل شما با دیگران چگونه است؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q13" value="دموی" class="ml-2" required> الف) بسیار اجتماعی، خوش‌صحبت و معاشرتی هستم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q13" value="صفراوی" class="ml-2"> ب) با آدم‌های جدی و اهل عمل راحت‌ترم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q13" value="بلغمی" class="ml-2"> ج) معمولاً ساکت و آرام هستم ولی در جمع حضور دارم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q13" value="سوداوی" class="ml-2"> د) کم‌حرف و محتاط هستم و به‌راحتی با دیگران گرم نمی‌گیرم
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۱۴. سرعت عمل شما در کارها چگونه است؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q14" value="دموی" class="ml-2" required> الف) با سرعت معمولی و انعطاف‌پذیر هستم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q14" value="صفراوی" class="ml-2"> ب) بسیار سریع و عجول هستم، صبر ندارم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q14" value="بلغمی" class="ml-2"> ج) کند و آرام و بدون عجله هستم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q14" value="سوداوی" class="ml-2"> د) با دقت و وسواس زیاد ولی نه خیلی سریع
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۱۵. در موقعیت‌های پرتنش چه رفتاری دارید؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q15" value="دموی" class="ml-2" required> الف) سعی می‌کنم دیگران را آرام کنم و فضای مثبت ایجاد کنم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q15" value="صفراوی" class="ml-2"> ب) کنترل اوضاع را به دست می‌گیرم و با شدت عمل واکنش نشان می‌دهم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q15" value="بلغمی" class="ml-2"> ج) سعی می‌کنم از تنش دور شوم یا بی‌تفاوت باشم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q15" value="سوداوی" class="ml-2"> د) در درونم اضطراب زیادی حس می‌کنم و گاهی خودخوری می‌کنم
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۱۶. به چه نوع فعالیت‌هایی علاقه‌مند هستید؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q16" value="دموی" class="ml-2" required> الف) مهمانی، جمع‌های دوستانه، تفریح گروهی
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q16" value="صفراوی" class="ml-2"> ب) رقابت، کارهای چالشی، فعالیت‌های هیجانی
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q16" value="بلغمی" class="ml-2"> ج) استراحت، تماشای فیلم، کارهای ساده و راحت
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q16" value="سوداوی" class="ml-2"> د) مطالعه، فکر کردن، خلوت و نوشتن
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۱۷. پایداری هیجانات شما چگونه است؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q17" value="دموی" class="ml-2" required> الف) احساساتم نوسان دارد ولی به‌زودی به حالت تعادل می‌رسد
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q17" value="صفراوی" class="ml-2"> ب) هیجاناتم شدید و گاهی غیرقابل کنترل است
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q17" value="بلغمی" class="ml-2"> ج) کمتر دچار هیجانات شدید می‌شوم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q17" value="سوداوی" class="ml-2"> د) اغلب غمگین یا مضطربم و مدت‌ها طول می‌کشد تا آرام شوم
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۱۸. در برابر نقد دیگران چه واکنشی دارید؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q18" value="دموی" class="ml-2" required> الف) با شوخی و خنده عبور می‌کنم و ناراحت نمی‌شوم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q18" value="صفراوی" class="ml-2"> ب) تند برخورد می‌کنم یا مقابله می‌کنم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q18" value="بلغمی" class="ml-2"> ج) سکوت می‌کنم و اهمیتی نمی‌دهم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q18" value="سوداوی" class="ml-2"> د) ناراحت می‌شوم ولی ابراز نمی‌کنم
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۱۹. آیا اهل برنامه‌ریزی و پیش‌بینی هستید؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q19" value="دموی" class="ml-2" required> الف) گاهی بله، ولی زیاد سخت نمی‌گیرم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q19" value="صفراوی" class="ml-2"> ب) ترجیح می‌دهم همه چیز تحت کنترل من باشد
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q19" value="بلغمی" class="ml-2"> ج) نه چندان، بیشتر به حال و شرایط پیش‌آمده وابسته‌ام
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q19" value="سوداوی" class="ml-2"> د) بله، همواره برای آینده برنامه‌ریزی می‌کنم و وسواس دارم
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۲۰. علاقه شما به گفتگوهای عاطفی و عمیق چگونه است؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q20" value="دموی" class="ml-2" required> الف) بیشتر اهل شوخی و بحث‌های سبک هستم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q20" value="صفراوی" class="ml-2"> ب) گفتگوهای عملی و کاربردی را ترجیح می‌دهم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q20" value="بلغمی" class="ml-2"> ج) زیاد اهل صحبت نیستم ولی به صحبت‌های دیگران گوش می‌دهم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q20" value="سوداوی" class="ml-2"> د) به گفتگوهای عمیق، فلسفی یا درونی علاقه دارم
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- دسته سوم: واکنش به شرایط محیطی -->
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-2xl font-semibold text-gray-700 mb-4">دسته سوم: واکنش به شرایط محیطی</h2>
+        <div class="space-y-4">
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۲۱. در چه فصلی احساس بهتری دارید و راحت‌تر هستید؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q21" value="دموی" class="ml-2" required> الف) بهار – نشاط و سرحالی بیشتری دارم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q21" value="صفراوی" class="ml-2"> ب) پاییز – از خنکی هوا و سبک بودن فضا لذت می‌برم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q21" value="بلغمی" class="ml-2"> ج) تابستان – گرمای هوا برایم مطلوب است
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q21" value="سوداوی" class="ml-2"> د) زمستان – در هوای سرد احساس آرامش بیشتری دارم
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۲۲. واکنش شما در برابر هوای گرم چگونه است؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q22" value="دموی" class="ml-2" required> الف) معمولاً مشکلی ندارم، اما گاهی گرمازده می‌شوم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q22" value="صفراوی" class="ml-2"> ب) به‌شدت کلافه می‌شوم و زود عصبانی یا خشک می‌شوم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q22" value="بلغمی" class="ml-2"> ج) در گرما راحت‌تر هستم و احساس سبکی می‌کنم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q22" value="سوداوی" class="ml-2"> د) گرما مرا بی‌حال و ناتوان می‌کند
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۲۳. در هوای سرد چگونه احساس می‌کنید؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q23" value="دموی" class="ml-2" required> الف) کمی سردم می‌شود اما قابل‌تحمل است
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q23" value="صفراوی" class="ml-2"> ب) با سرما کنار می‌آیم و چندان اذیت نمی‌شوم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q23" value="بلغمی" class="ml-2"> ج) به‌شدت از سرما فراری هستم و سریع سردم می‌شود
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q23" value="سوداوی" class="ml-2"> د) سرما باعث بی‌حسی، بی‌خوابی یا دردهای بدنی در من می‌شود
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۲۴. بدن شما هنگام تغییرات آب‌و‌هوایی چه واکنشی نشان می‌دهد؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q24" value="دموی" class="ml-2" required> الف) زود سازگار می‌شود و زیاد حساس نیستم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q24" value="صفراوی" class="ml-2"> ب) در روزهای خشک و بادخیز تحریک‌پذیرتر و عصبی می‌شوم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q24" value="بلغمی" class="ml-2"> ج) در روزهای مرطوب دچار بی‌حالی یا خواب‌آلودگی می‌شوم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q24" value="سوداوی" class="ml-2"> د) تغییر فصل به‌خصوص پاییز مرا دچار اضطراب یا بی‌قراری می‌کند
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۲۵. تحمل شما نسبت به محیط‌های مرطوب چگونه است؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q25" value="دموی" class="ml-2" required> الف) رطوبت زیاد باعث تعریق و کمی سنگینی بدنم می‌شود
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q25" value="صفراوی" class="ml-2"> ب) بدنم با رطوبت زیاد تحریک می‌شود و دچار خارش یا گرگرفتگی می‌شوم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q25" value="بلغمی" class="ml-2"> ج) رطوبت را دوست دارم، احساس راحتی بیشتری می‌کنم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q25" value="سوداوی" class="ml-2"> د) در محیط مرطوب دچار سردی مفاصل و افسردگی می‌شوم
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۲۶. در مواجهه با باد (مخصوصاً باد سرد یا خشک) چه حس و واکنشی دارید؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q26" value="دموی" class="ml-2" required> الف) باد فقط پوست من را خشک می‌کند، ولی مشکلی ندارم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q26" value="صفراوی" class="ml-2"> ب) سریع چشم و بینی‌ام خشک یا تحریک می‌شود
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q26" value="بلغمی" class="ml-2"> ج) از باد بدم می‌آید، مخصوصاً اگر سرد باشد
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q26" value="سوداوی" class="ml-2"> د) باد باعث دل‌درد، بی‌قراری یا دل‌پیچه در من می‌شود
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۲۷. بعد از قرار گرفتن در آفتاب مستقیم چه حالتی پیدا می‌کنید؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q27" value="دموی" class="ml-2" required> الف) گرم و پرانرژی می‌شوم و حس خوبی دارم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q27" value="صفراوی" class="ml-2"> ب) زود عصبی یا داغ می‌شوم و طاقت نمی‌آورم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q27" value="بلغمی" class="ml-2"> ج) احساس سبکی و راحتی می‌کنم، خواب‌آلود می‌شوم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q27" value="سوداوی" class="ml-2"> د) دچار سرگیجه یا احساس ضعف می‌شوم
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۲۸. در سفر به مناطق مختلف، کدام آب‌و‌هوا را ترجیح می‌دهید؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q28" value="دموی" class="ml-2" required> الف) مناطق معتدل و سرسبز
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q28" value="صفراوی" class="ml-2"> ب) مناطق خشک و کوهستانی
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q28" value="بلغمی" class="ml-2"> ج) مناطق گرم و مرطوب
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q28" value="سوداوی" class="ml-2"> د) مناطق سرد و خنک
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۲۹. در تغییرات شدید آب‌و‌هوا، چه اختلالی بیشتر سراغ شما می‌آید؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q29" value="دموی" class="ml-2" required> الف) احساس خستگی یا خواب‌آلودگی
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q29" value="صفراوی" class="ml-2"> ب) بی‌قراری، بی‌خوابی یا خشکی پوست
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q29" value="بلغمی" class="ml-2"> ج) درد مفاصل، کسالت و نفخ
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q29" value="سوداوی" class="ml-2"> د) افسردگی، اضطراب یا افکار منفی
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۳۰. واکنش شما به سرمای صبحگاهی چیست؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q30" value="دموی" class="ml-2" required> الف) با کمی پوشش حل می‌شود و مشکلی ندارم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q30" value="صفراوی" class="ml-2"> ب) باعث گرفتگی عضلات و خشکی بینی می‌شود
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q30" value="بلغمی" class="ml-2"> ج) بسیار اذیت می‌شوم و حس می‌کنم انرژی ندارم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q30" value="سوداوی" class="ml-2"> د) تمام بدنم منقبض و دچار سردی اندام‌ها می‌شود
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- دسته چهارم: وضعیت گوارشی و تمایلات غذایی -->
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-2xl font-semibold text-gray-700 mb-4">دسته چهارم: وضعیت گوارشی و تمایلات غذایی</h2>
+        <div class="space-y-4">
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۳۱. اشتها و میل به غذا خوردن شما چگونه است؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q31" value="دموی" class="ml-2" required> الف) اشتهای خوبی دارم ولی پرخوری نمی‌کنم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q31" value="صفراوی" class="ml-2"> ب) گاهی بسیار گرسنه می‌شوم و گاهی بی‌اشتها هستم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q31" value="بلغمی" class="ml-2"> ج) همیشه اشتهای زیادی دارم و مایل به پرخوری‌ام
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q31" value="سوداوی" class="ml-2"> د) اشتهای کمی دارم، به‌خصوص هنگام ناراحتی یا استرس
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۳۲. بعد از خوردن غذا چه احساسی دارید؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q32" value="دموی" class="ml-2" required> الف) به‌طور کلی احساس سبکی و نشاط می‌کنم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q32" value="صفراوی" class="ml-2"> ب) گاهی دچار سوزش معده یا تلخی دهان می‌شوم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q32" value="بلغمی" class="ml-2"> ج) احساس سنگینی، نفخ یا خواب‌آلودگی دارم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q32" value="سوداوی" class="ml-2"> د) گاهی دل‌پیچه، ترش کردن یا یبوست پیدا می‌کنم
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۳۳. به چه طعم‌هایی تمایل بیشتری دارید؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q33" value="دموی" class="ml-2" required> الف) طعم‌های شیرین و متعادل
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q33" value="صفراوی" class="ml-2"> ب) طعم‌های ترش یا تند
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q33" value="بلغمی" class="ml-2"> ج) طعم‌های شور و چرب
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q33" value="سوداوی" class="ml-2"> د) طعم‌های گس، تلخ یا قابض
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۳۴. تمایل شما به خوردن گوشت چگونه است؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q34" value="دموی" class="ml-2" required> الف) گوشت را دوست دارم و مشکلی با آن ندارم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q34" value="صفراوی" class="ml-2"> ب) گاهی دوست دارم ولی زود دل‌زده می‌شوم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q34" value="بلغمی" class="ml-2"> ج) میل زیادی به گوشت و غذاهای سنگین دارم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q34" value="سوداوی" class="ml-2"> د) گوشت زیاد نمی‌خورم و بیشتر غذاهای سبک ترجیح می‌دهم
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۳۵. تمایل شما به خوردن شیرینی‌ها و شیرینی‌جات چگونه است؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q35" value="دموی" class="ml-2" required> الف) در حد متعادل دوست دارم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q35" value="صفراوی" class="ml-2"> ب) تمایلی ندارم یا زود دل‌زده می‌شوم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q35" value="بلغمی" class="ml-2"> ج) بسیار علاقه‌مندم، مخصوصاً بعد از غذا
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q35" value="سوداوی" class="ml-2"> د) گاهی به شیرینی‌های خاص مانند خرما یا شیرینی خشک میل دارم
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۳۶. چند بار در روز احساس گرسنگی می‌کنید؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q36" value="دموی" class="ml-2" required> الف) سه وعده در روز میل به غذا دارم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q36" value="صفراوی" class="ml-2"> ب) معمولاً یک یا دو وعده اشتها دارم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q36" value="بلغمی" class="ml-2"> ج) تقریباً همیشه احساس گرسنگی دارم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q36" value="سوداوی" class="ml-2"> د) گاهی اصلاً احساس گرسنگی نمی‌کنم، به‌خصوص تحت استرس
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۳۷. نوشیدن آب برای شما چگونه است؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q37" value="دموی" class="ml-2" required> الف) میزان نرمالی آب می‌نوشم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q37" value="صفراوی" class="ml-2"> ب) زیاد تشنه می‌شوم، مخصوصاً بعد از غذا یا ورزش
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q37" value="بلغمی" class="ml-2"> ج) میل زیادی به نوشیدن آب ندارم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q37" value="سوداوی" class="ml-2"> د) زیاد آب نمی‌خورم، ولی دهانم خشک می‌شود
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۳۸. سرعت گوارش و هضم غذا در شما چگونه است؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q38" value="دموی" class="ml-2" required> الف) هضم غذا مناسب و طبیعی است
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q38" value="صفراوی" class="ml-2"> ب) گاهی سریع و گاهی ناقص است، بسته به شرایط روحی
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q38" value="بلغمی" class="ml-2"> ج) هضم کندی دارم و غذا دیرتر جذب بدن می‌شود
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q38" value="سوداوی" class="ml-2"> د) هضم غذا سخت است و اغلب ناراحتی گوارشی دارم
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۳۹. تمایل شما به خوردن سالاد و سبزیجات چگونه است؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q39" value="دموی" class="ml-2" required> الف) در حد معمول مصرف می‌کنم و لذت می‌برم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q39" value="صفراوی" class="ml-2"> ب) سالاد و ترشی‌جات را دوست دارم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q39" value="بلغمی" class="ml-2"> ج) خیلی علاقه ندارم و بیشتر غذای پخته ترجیح می‌دهم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q39" value="سوداوی" class="ml-2"> د) بیشتر سبزی‌های خشک یا دارویی مصرف می‌کنم
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۴۰. مصرف لبنیات برای شما چه تأثیری دارد؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q40" value="دموی" class="ml-2" required> الف) معمولاً مشکلی ایجاد نمی‌کند
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q40" value="صفراوی" class="ml-2"> ب) گاهی باعث نفخ یا اسهال می‌شود
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q40" value="بلغمی" class="ml-2"> ج) باعث خواب‌آلودگی و سنگینی بدن می‌شود
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q40" value="سوداوی" class="ml-2"> د) احساس سردی و یبوست یا دل‌درد دارم بعد از مصرف
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- دسته پنجم: نشانه‌های اختصاصی و علائم بالینی -->
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-2xl font-semibold text-gray-700 mb-4">دسته پنجم: نشانه‌های اختصاصی و علائم بالینی</h2>
+        <div class="space-y-4">
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۴۱. حالت زبان شما در حالت عادی چگونه است؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q41" value="دموی" class="ml-2" required> الف) رنگ صورتی طبیعی و زبان مرطوب
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q41" value="صفراوی" class="ml-2"> ب) نوک زبان قرمز، گاهی زردرنگ با لایه‌ای نازک
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q41" value="بلغمی" class="ml-2"> ج) زبان پهن و سفید‌رنگ با لایه‌ای ضخیم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q41" value="سوداوی" class="ml-2"> د) زبان باریک، تیره یا بنفش مایل به قهوه‌ای با ترک
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۴۲. نبض شما چگونه است؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q42" value="دموی" class="ml-2" required> الف) قوی، منظم و پرشدار
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q42" value="صفراوی" class="ml-2"> ب) تند و ضربه‌ای
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q42" value="بلغمی" class="ml-2"> ج) آهسته و نرم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q42" value="سوداوی" class="ml-2"> د) باریک، ضعیف، منقطع یا نامنظم
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۴۳. مدفوع شما معمولاً چه حالتی دارد؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q43" value="دموی" class="ml-2" required> الف) نرمال و شکل‌دار، با دفع راحت
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q43" value="صفراوی" class="ml-2"> ب) خشک یا همراه با سوزش و گاهی اسهال
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q43" value="بلغمی" class="ml-2"> ج) شل و چرب، گاهی با بلغم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q43" value="سوداوی" class="ml-2"> د) سفت، تیره‌رنگ، گاهی همراه با یبوست مزمن
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۴۴. احساس غالب در زمان بیدار شدن از خواب چیست؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q44" value="دموی" class="ml-2" required> الف) سرحال و با انرژی
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q44" value="صفراوی" class="ml-2"> ب) خشک‌لب، دهان تلخ و گاهی بی‌قرار
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q44" value="بلغمی" class="ml-2"> ج) خواب‌آلود، سنگین و کسل
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q44" value="سوداوی" class="ml-2"> د) سردی بدن، حس اضطراب یا خستگی ذهنی
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۴۵. ضربان قلب شما در حالت استراحت معمولاً چگونه است؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q45" value="دموی" class="ml-2" required> الف) نرمال و آرام
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q45" value="صفراوی" class="ml-2"> ب) تند و ناپایدار، مخصوصاً در گرما
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q45" value="بلغمی" class="ml-2"> ج) کند و آرام
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q45" value="سوداوی" class="ml-2"> د) نامنظم، گاهی با تپش‌های پراکنده یا اضطرابی
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۴۶. وضعیت پوست و ناخن‌های شما چگونه است؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q46" value="دموی" class="ml-2" required> الف) پوست شفاف و ناخن‌های صورتی‌رنگ سالم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q46" value="صفراوی" class="ml-2"> ب) پوست زبر یا ملتهب، ناخن‌های شکننده یا زرد
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q46" value="بلغمی" class="ml-2"> ج) پوست سفید و سرد، ناخن‌های رنگ‌پریده
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q46" value="سوداوی" class="ml-2"> د) پوست خشک، تیره، ترک‌خورده، ناخن‌های تیره یا خط‌دار
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۴۷. موهای بدن (به‌ویژه در مردان) چگونه رشد می‌کند؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q47" value="دموی" class="ml-2" required> الف) رشد متوسط، موزون و خوش‌حالت
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q47" value="صفراوی" class="ml-2"> ب) سریع و زیاد، موها خشک و زبر
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q47" value="بلغمی" class="ml-2"> ج) رشد کم، موها نرم و نازک
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q47" value="سوداوی" class="ml-2"> د) رشد کم یا موضعی، با نازکی و شکنندگی
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۴۸. عادت ماهیانه (در زنان) یا میل جنسی (در مردان) چگونه است؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q48" value="دموی" class="ml-2" required> الف) نرمال و متعادل، با انرژی جنسی پایدار
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q48" value="صفراوی" class="ml-2"> ب) تمایل زیاد، اما با نوسان زیاد و زود‌رنجی
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q48" value="بلغمی" class="ml-2"> ج) تمایل کم، ولی با ثبات و آرامی
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q48" value="سوداوی" class="ml-2"> د) کاهش شدید میل یا اختلال در سیکل‌ها
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۴۹. وضعیت خواب شبانه چگونه است؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q49" value="دموی" class="ml-2" required> الف) خواب آرام و منظم
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q49" value="صفراوی" class="ml-2"> ب) خواب کم یا همراه با کابوس و بیداری مکرر
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q49" value="بلغمی" class="ml-2"> ج) خواب سنگین، طولانی و با سختی بیدار شدن
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q49" value="سوداوی" class="ml-2"> د) بی‌خوابی مزمن یا خواب پر از فکر و اضطراب
+              </label>
+            </div>
+          </div>
+          <div class="question-card">
+            <p class="font-medium text-gray-800">۵۰. وضعیت حافظه و تمرکز شما چگونه است؟</p>
+            <div class="space-y-2">
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q50" value="دموی" class="ml-2" required> الف) حافظه قوی و تمرکز خوب
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q50" value="صفراوی" class="ml-2"> ب) ذهن تیز ولی حواس‌پرتی زیاد
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q50" value="بلغمی" class="ml-2"> ج) فراموشی موقت و کندی ذهن
+              </label>
+              <label class="option-label flex items-center p-2 rounded">
+                <input type="radio" name="q50" value="سوداوی" class="ml-2"> د) حافظه خوب اما پر از فکر و وسواس ذهنی
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- دکمه ارسال -->
+      <div class="text-center">
+        <button type="submit" id="submit-btn" class="bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-blue-700 transition duration-200">ارسال و تحلیل مزاج</button>
+      </div>
+    </form>
+
+    <!-- نمایش نتیجه -->
+    <div id="result" class="hidden mt-8 bg-white rounded-lg shadow-md p-6 text-center">
+      <h2 class="text-2xl font-semibold text-gray-700 mb-4">نتیجه تست مزاج</h2>
+      <p id="dominant-temperament" class="text-lg text-gray-800"></p>
+      <p id="description" class="text-gray-600 mt-2"></p>
+      <p id="scores" class="text-gray-600 mt-4"></p>
+      <canvas id="temperament-chart" class="mt-6 max-w-full"></canvas>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('quiz-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const form = document.getElementById('quiz-form');
+      const inputs = form.querySelectorAll('input[type="radio"]:checked');
+
+      if (inputs.length < 50) {
+        alert('لطفاً به تمام سؤالات پاسخ دهید.');
+        return;
+      }
+
+      const scores = {
+        دموی: 0,
+        صفراوی: 0,
+        بلغمی: 0,
+        سوداوی: 0
+      };
+
+      inputs.forEach(input => {
+        scores[input.value]++;
+      });
+
+      const maxScore = Math.max(...Object.values(scores));
+      const dominantTemperament = Object.keys(scores).find(key => scores[key] === maxScore);
+
+      const descriptions = {
+        دموی: 'مزاج دموی (گرم و تر): شما فردی پرانرژی، معاشرتی و خوش‌رو هستید. معمولاً بدنی عضلانی و پوست سرخ‌وسفید دارید. خواب و هضم غذا در شما متعادل است.',
+        صفراوی: 'مزاج صفراوی (گرم و خشک): شما فردی پرتحرک، عجول و گاهی پرخاشگر هستید. پوست شما ممکن است زرد یا خشک باشد و اغلب تشنگی زیادی احساس می‌کنید.',
+        بلغمی: 'مزاج بلغمی (سرد و تر): شما فردی آرام، کم‌تحرک و با پوست سفید و نرم هستید. ممکن است استعداد چاقی داشته باشید و هضم غذا در شما کند باشد.',
+        سوداوی: 'مزاج سوداوی (سرد و خشک): شما فردی متفکر، محتاط و گاهی مضطرب هستید. پوست شما ممکن است تیره و خشک باشد و گاهی دچار یبوست یا بی‌خوابی می‌شوید.'
+      };
+
+      const resultDiv = document.getElementById('result');
+            const dominantTemperamentP = document.getElementById('dominant-temperament');
+      const descriptionP = document.getElementById('description');
+      const scoresP = document.getElementById('scores');
+      const chartCanvas = document.getElementById('temperament-chart').getContext('2d');
+
+      dominantTemperamentP.textContent = `مزاج غالب شما: ${dominantTemperament}`;
+      descriptionP.textContent = descriptions[dominantTemperament];
+      scoresP.innerHTML = `
+        <strong>امتیازات:</strong><br>
+        دموی: ${scores.دموی} از ۵۰<br>
+        صفراوی: ${scores.صفراوی} از ۵۰<br>
+        بلغمی: ${scores.بلغمی} از ۵۰<br>
+        سوداوی: ${scores.سوداوی} از ۵۰
+      `;
+      resultDiv.classList.remove('hidden');
+
+      // Create Chart
+      new Chart(chartCanvas, {
+        type: 'bar',
+        data: {
+          labels: ['دموی', 'صفراوی', 'بلغمی', 'سوداوی'],
+          datasets: [{
+            label: 'امتیازات مزاج',
+            data: [scores.دموی, scores.صفراوی, scores.بلغمی, scores.سوداوی],
+            backgroundColor: ['#EF4444', '#FBBF24', '#3B82F6', '#6B7280'],
+            borderColor: ['#B91C1C', '#D97706', '#1E40AF', '#4B5563'],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 50,
+              title: {
+                display: true,
+                text: 'امتیاز'
+              }
+            },
+            x: {
+              title: {
+                display: true,
+                text: 'نوع مزاج'
+              }
+            }
+          },
+          plugins: {
+            legend: {
+              display: false
+            },
+            title: {
+              display: true,
+              text: 'توزیع امتیازات مزاج'
+            }
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
