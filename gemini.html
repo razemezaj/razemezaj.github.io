@@ -1,0 +1,869 @@
+باشه حتماً. در ادامه یک فایل HTML کامل، مدرن و ریسپانسیو برای آزمون مزاج‌شناسی شما طراحی شده است. این فایل شامل تمام ۵۰ سوال، استایل‌دهی (CSS) و منطق محاسبه و نمایش نتیجه (JavaScript) در یک صفحه است. کافی است این کد را در یک فایل با پسوند `.html` ذخیره کرده و در مرورگر خود باز کنید.
+
+### ویژگی‌های کلیدی این فایل:
+
+  * **طراحی ریسپانسیو:** صفحه در دستگاه‌های مختلف از موبایل گرفته تا دسکتاپ به خوبی نمایش داده می‌شود.
+  * **رابط کاربری مدرن:** از طراحی تمیز و کاربرپسندی استفاده شده است.
+  * **فونت فارسی خوانا:** فونت وزیرمتن برای خوانایی بهتر متن فارسی اضافه شده است.
+  * **تحلیل خودکار:** با کلیک روی دکمه "ارسال و تحلیل نتیجه"، مزاج غالب شما بر اساس پاسخ‌ها محاسبه و به همراه امتیازات هر مزاج و توضیحات مربوطه نمایش داده می‌شود.
+  * **اعتبارسنجی ساده:** در صورتی که به تمام سوالات پاسخ نداده باشید، یک پیام هشدار نمایش داده می‌شود.
+  * **فایل واحد:** تمام کدهای HTML, CSS و JavaScript در یک فایل قرار دارند تا استفاده از آن آسان باشد.
+
+-----
+
+### کد HTML آزمون مزاج‌شناسی
+
+کد زیر را کپی کرده و در یک فایل متنی ذخیره کنید. نام فایل را به `test-mezaj.html` تغییر دهید و آن را در مرورگر وب خود باز کنید.
+
+```html
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آزمون آنلاین تشخیص مزاج</title>
+    <style>
+        /* Import Font */
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700&display=swap');
+
+        /* General Styles */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --background-color: #ecf0f1;
+            --container-bg: #ffffff;
+            --text-color: #34495e;
+            --border-color: #bdc3c7;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --danger-color: #c0392b;
+            --light-gray: #f9f9f9;
+        }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            font-size: 16px;
+        }
+
+        /* Container */
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px 30px;
+            background-color: var(--container-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Typography */
+        h1, h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-top: 40px;
+        }
+
+        /* Form Elements */
+        .quiz-form {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .question-block {
+            background-color: var(--light-gray);
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .question-block:focus-within {
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.5);
+            border-color: var(--secondary-color);
+        }
+
+        .question-text {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        .question-text::before {
+            content: '❓';
+            margin-left: 8px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 6px;
+            transition: background-color 0.2s ease;
+        }
+        
+        .option:hover {
+            background-color: #e9ecef;
+        }
+
+        .option input[type="radio"] {
+            display: none; /* Hide default radio */
+        }
+
+        .option label {
+            cursor: pointer;
+            width: 100%;
+            position: relative;
+            padding-right: 35px;
+        }
+
+        .option .custom-radio {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            transition: all 0.2s ease;
+        }
+
+        .option .custom-radio::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 10px;
+            height: 10px;
+            background-color: var(--secondary-color);
+            border-radius: 50%;
+            transition: transform 0.2s ease;
+        }
+        
+        .option input[type="radio"]:checked + label .custom-radio {
+            border-color: var(--secondary-color);
+        }
+
+        .option input[type="radio"]:checked + label .custom-radio::after {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+
+        /* Submit Button */
+        .submit-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            font-family: 'Vazirmatn', sans-serif;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 30px;
+            align-self: center;
+        }
+
+        .submit-btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        /* Result Section */
+        #result-container {
+            margin-top: 40px;
+            padding: 30px;
+            background-color: var(--light-gray);
+            border-radius: 12px;
+            text-align: center;
+            display: none; /* Hidden by default */
+            border: 2px solid transparent;
+            animation: fadeIn 1s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        #result-container h2 {
+            border-color: var(--success-color);
+        }
+
+        .dominant-mezaj {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 15px 0;
+        }
+
+        .mezaj-damavi { color: var(--danger-color); }
+        .mezaj-safravi { color: var(--warning-color); }
+        .mezaj-balghami { color: var(--secondary-color); }
+        .mezaj-sudavi { color: var(--primary-color); }
+
+        .result-description {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .all-scores {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .score-card {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+            width: 150px;
+        }
+        
+        .score-card h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.2rem;
+        }
+        
+        .score-card p {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+                margin: 10px;
+            }
+
+            h1 { font-size: 1.5rem; }
+            h2 { font-size: 1.3rem; }
+            .question-text { font-size: 1rem; }
+            .option label { font-size: 0.95rem; }
+            .submit-btn { width: 100%; padding: 12px; }
+            #result-container { padding: 20px; }
+            .dominant-mezaj { font-size: 1.5rem; }
+            .result-description { font-size: 1rem; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>آزمون جامع تشخیص مزاج</h1>
+        <p style="text-align: center; margin-bottom: 30px;">این پرسش‌ها بر پایه‌ی معیارهای ذکر‌شده در منابع معتبر طب سنتی طراحی شده‌اند. برای دریافت دقیق‌ترین نتیجه، گزینه‌ای را انتخاب کنید که بیشترین تطابق را با وضعیت پایدار شما دارد.</p>
+
+        <form id="quiz-form" class="quiz-form">
+            
+            <h2>دسته اول: ویژگی‌های ظاهری و فیزیکی</h2>
+            <div class="question-block">
+                <p class="question-text">1. رنگ پوست بدن شما به طور کلی چگونه است؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q1a" name="q1" value="damavi"><label for="q1a"><span class="custom-radio"></span>الف) سرخ‌وسفید و گُلگون</label></div>
+                    <div class="option"><input type="radio" id="q1b" name="q1" value="safravi"><label for="q1b"><span class="custom-radio"></span>ب) متمایل به زرد یا گندمگونِ روشن</label></div>
+                    <div class="option"><input type="radio" id="q1c" name="q1" value="balghami"><label for="q1c"><span class="custom-radio"></span>ج) روشن و کم‌رنگ (سفید مایل به مهتابی)</label></div>
+                    <div class="option"><input type="radio" id="q1d" name="q1" value="sudavi"><label for="q1d"><span class="custom-radio"></span>د) سبزه‌ی تیره و مات</label></div>
+                </div>
+            </div>
+             <div class="question-block">
+                <p class="question-text">2. رنگ موی سر شما در دوران کودکی و نوجوانی چه بوده است؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q2a" name="q2" value="damavi"><label for="q2a"><span class="custom-radio"></span>الف) مشکی معمولی یا خرمایی پررنگ</label></div>
+                    <div class="option"><input type="radio" id="q2b" name="q2" value="safravi"><label for="q2b"><span class="custom-radio"></span>ب) مشکی پرکلاغی</label></div>
+                    <div class="option"><input type="radio" id="q2c" name="q2" value="balghami"><label for="q2c"><span class="custom-radio"></span>ج) خرمایی روشن یا بور</label></div>
+                    <div class="option"><input type="radio" id="q2d" name="q2" value="sudavi"><label for="q2d"><span class="custom-radio"></span>د) مشکی مات و کدر</label></div>
+                </div>
+            </div>
+             <div class="question-block">
+                <p class="question-text">3. حالت و جنس موهای سر شما چگونه است؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q3a" name="q3" value="damavi"><label for="q3a"><span class="custom-radio"></span>الف) حالت موها معمولی است</label></div>
+                    <div class="option"><input type="radio" id="q3b" name="q3" value="safravi"><label for="q3b"><span class="custom-radio"></span>ب) موهای بسیار مجعدی دارید</label></div>
+                    <div class="option"><input type="radio" id="q3c" name="q3" value="balghami"><label for="q3c"><span class="custom-radio"></span>ج) موهای شما کاملاً صاف و لَخت است</label></div>
+                    <div class="option"><input type="radio" id="q3d" name="q3" value="sudavi"><label for="q3d"><span class="custom-radio"></span>د) موهای موج‌دار با فِر ریز دارید</label></div>
+                </div>
+            </div>
+             <div class="question-block">
+                <p class="question-text">4. زمانی که پوست بدن خود را لمس می‌کنید، حرارت و رطوبت آن را چگونه احساس می‌کنید؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q4a" name="q4" value="damavi"><label for="q4a"><span class="custom-radio"></span>الف) پوستم گرم و مرطوب است</label></div>
+                    <div class="option"><input type="radio" id="q4b" name="q4" value="safravi"><label for="q4b"><span class="custom-radio"></span>ب) گرم ولی خشک است</label></div>
+                    <div class="option"><input type="radio" id="q4c" name="q4" value="balghami"><label for="q4c"><span class="custom-radio"></span>ج) خنک و مرطوب است</label></div>
+                    <div class="option"><input type="radio" id="q4d" name="q4" value="sudavi"><label for="q4d"><span class="custom-radio"></span>د) خنک و خشک است</label></div>
+                </div>
+            </div>
+             <div class="question-block">
+                <p class="question-text">5. هیکل و جثه‌ی بدن شما چگونه توصیف می‌شود؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q5a" name="q5" value="damavi"><label for="q5a"><span class="custom-radio"></span>الف) درشت‌اندام و عضلانی</label></div>
+                    <div class="option"><input type="radio" id="q5b" name="q5" value="safravi"><label for="q5b"><span class="custom-radio"></span>ب) نسبتاً لاغر و قدبلند</label></div>
+                    <div class="option"><input type="radio" id="q5c" name="q5" value="balghami"><label for="q5c"><span class="custom-radio"></span>ج) چاق و پرچربی</label></div>
+                    <div class="option"><input type="radio" id="q5d" name="q5" value="sudavi"><label for="q5d"><span class="custom-radio"></span>د) بسیار لاغر و کم‌گوشت</label></div>
+                </div>
+            </div>
+            <div class="question-block">
+                <p class="question-text">6. وضعیت تعریق بدن شما چگونه است؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q6a" name="q6" value="damavi"><label for="q6a"><span class="custom-radio"></span>الف) زیاد عرق می‌کنم و بدنم گرم است.</label></div>
+                    <div class="option"><input type="radio" id="q6b" name="q6" value="safravi"><label for="q6b"><span class="custom-radio"></span>ب) چندان عرق نمی‌کنم و پوستم خشک است.</label></div>
+                    <div class="option"><input type="radio" id="q6c" name="q6" value="balghami"><label for="q6c"><span class="custom-radio"></span>ج) تعریقم زیاد است و گاهی عرق سرد می‌کنم.</label></div>
+                    <div class="option"><input type="radio" id="q6d" name="q6" value="sudavi"><label for="q6d"><span class="custom-radio"></span>د) به ندرت عرق می‌کنم و پوستم خشک و سرد است.</label></div>
+                </div>
+            </div>
+            <div class="question-block">
+                <p class="question-text">7. الگوی خواب و بیداری شما چگونه است؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q7a" name="q7" value="damavi"><label for="q7a"><span class="custom-radio"></span>الف) خوابم کافی و راحت است (۷-۸ ساعت).</label></div>
+                    <div class="option"><input type="radio" id="q7b" name="q7" value="safravi"><label for="q7b"><span class="custom-radio"></span>ب) خوابم کم و سبک است.</label></div>
+                    <div class="option"><input type="radio" id="q7c" name="q7" value="balghami"><label for="q7c"><span class="custom-radio"></span>ج) خواب زیادی دارم و سنگین است.</label></div>
+                    <div class="option"><input type="radio" id="q7d" name="q7" value="sudavi"><label for="q7d"><span class="custom-radio"></span>د) به خاطر فکر و خیال زیاد گاهی دچار بی‌خوابی می‌شوم.</label></div>
+                </div>
+            </div>
+            <div class="question-block">
+                <p class="question-text">8. وزن بدن و تغییرات آن چگونه است؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q8a" name="q8" value="damavi"><label for="q8a"><span class="custom-radio"></span>الف) وزن متعادل و هیکل پُر و عضلانی دارم.</label></div>
+                    <div class="option"><input type="radio" id="q8b" name="q8" value="safravi"><label for="q8b"><span class="custom-radio"></span>ب) سوخت‌وسازم بالا است و چندان چاق نمی‌شوم.</label></div>
+                    <div class="option"><input type="radio" id="q8c" name="q8" value="balghami"><label for="q8c"><span class="custom-radio"></span>ج) استعداد چاقی دارم و سریع وزن اضافه می‌کنم.</label></div>
+                    <div class="option"><input type="radio" id="q8d" name="q8" value="sudavi"><label for="q8d"><span class="custom-radio"></span>د) افزایش وزنم دشوار است و اغلب لاغر می‌مانم.</label></div>
+                </div>
+            </div>
+            <div class="question-block">
+                <p class="question-text">9. سطح انرژی و میزان جنب‌وجوش بدنی شما چگونه است؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q9a" name="q9" value="damavi"><label for="q9a"><span class="custom-radio"></span>الف) بسیار پرانرژی و سرحال هستم.</label></div>
+                    <div class="option"><input type="radio" id="q9b" name="q9" value="safravi"><label for="q9b"><span class="custom-radio"></span>ب) پرتحرک و عجول هستم.</label></div>
+                    <div class="option"><input type="radio" id="q9c" name="q9" value="balghami"><label for="q9c"><span class="custom-radio"></span>ج) کم‌انرژی و کم‌تحرک هستم.</label></div>
+                    <div class="option"><input type="radio" id="q9d" name="q9" value="sudavi"><label for="q9d"><span class="custom-radio"></span>د) سریع احساس خستگی و بی‌حالی می‌کنم.</label></div>
+                </div>
+            </div>
+            <div class="question-block">
+                <p class="question-text">10. احساس تشنگی و میزان نوشیدن آب در شما چگونه است؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q10a" name="q10" value="damavi"><label for="q10a"><span class="custom-radio"></span>الف) میزان تشنگی من معمولی است.</label></div>
+                    <div class="option"><input type="radio" id="q10b" name="q10" value="safravi"><label for="q10b"><span class="custom-radio"></span>ب) اغلب احساس تشنگی شدیدی دارم.</label></div>
+                    <div class="option"><input type="radio" id="q10c" name="q10" value="balghami"><label for="q10c"><span class="custom-radio"></span>ج) معمولاً خیلی تشنه نمی‌شوم.</label></div>
+                    <div class="option"><input type="radio" id="q10d" name="q10" value="sudavi"><label for="q10d"><span class="custom-radio"></span>د) زیاد تشنه نمی‌شوم اما دهانم غالباً خشک است.</label></div>
+                </div>
+            </div>
+
+            <h2>🧠 دسته دوم: ویژگی‌های روانی و رفتاری</h2>
+             <div class="question-block">
+                <p class="question-text">11. واکنش شما هنگام عصبانیت چگونه است؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q11a" name="q11" value="damavi"><label for="q11a"><span class="custom-radio"></span>الف) سریع عصبانی می‌شوم اما زود هم آرام می‌گیرم.</label></div>
+                    <div class="option"><input type="radio" id="q11b" name="q11" value="safravi"><label for="q11b"><span class="custom-radio"></span>ب) با شدت و تندی عصبی می‌شوم و گاهی پرخاشگر می‌شوم.</label></div>
+                    <div class="option"><input type="radio" id="q11c" name="q11" value="balghami"><label for="q11c"><span class="custom-radio"></span>ج) به‌ندرت عصبانی می‌شوم و سعی می‌کنم کنترل‌شده رفتار کنم.</label></div>
+                    <div class="option"><input type="radio" id="q11d" name="q11" value="sudavi"><label for="q11d"><span class="custom-radio"></span>د) ناراحتی‌ها را درون خودم نگه می‌دارم و به‌صورت پنهانی می‌رنجم.</label></div>
+                </div>
+            </div>
+            <div class="question-block">
+                <p class="question-text">12. نوع تصمیم‌گیری شما بیشتر چگونه است؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q12a" name="q12" value="damavi"><label for="q12a"><span class="custom-radio"></span>الف) بیشتر بر پایه احساس و معاشرت تصمیم می‌گیرم.</label></div>
+                    <div class="option"><input type="radio" id="q12b" name="q12" value="safravi"><label for="q12b"><span class="custom-radio"></span>ب) تصمیماتم سریع، قاطع و معمولاً بدون مشورت است.</label></div>
+                    <div class="option"><input type="radio" id="q12c" name="q12" value="balghami"><label for="q12c"><span class="custom-radio"></span>ج) اغلب تصمیم‌گیری‌ها را به تعویق می‌اندازم.</label></div>
+                    <div class="option"><input type="radio" id="q12d" name="q12" value="sudavi"><label for="q12d"><span class="custom-radio"></span>د) زیاد فکر و تجزیه‌وتحلیل می‌کنم، سپس تصمیم می‌گیرم.</label></div>
+                </div>
+            </div>
+            <div class="question-block">
+                <p class="question-text">13. تعامل شما با دیگران چگونه است؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q13a" name="q13" value="damavi"><label for="q13a"><span class="custom-radio"></span>الف) بسیار اجتماعی، خوش‌صحبت و معاشرتی هستم.</label></div>
+                    <div class="option"><input type="radio" id="q13b" name="q13" value="safravi"><label for="q13b"><span class="custom-radio"></span>ب) معاشرت زیاد دوست ندارم.</label></div>
+                    <div class="option"><input type="radio" id="q13c" name="q13" value="balghami"><label for="q13c"><span class="custom-radio"></span>ج) معمولاً ساکت و آرام هستم ولی در جمع حضور دارم.</label></div>
+                    <div class="option"><input type="radio" id="q13d" name="q13" value="sudavi"><label for="q13d"><span class="custom-radio"></span>د) کم‌حرف و محتاط هستم و به‌راحتی با دیگران گرم نمی‌گیرم.</label></div>
+                </div>
+            </div>
+            <div class="question-block">
+                <p class="question-text">14. سرعت عمل شما در کارها چگونه است؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q14a" name="q14" value="damavi"><label for="q14a"><span class="custom-radio"></span>الف) با سرعت معمولی و انعطاف‌پذیر هستم.</label></div>
+                    <div class="option"><input type="radio" id="q14b" name="q14" value="safravi"><label for="q14b"><span class="custom-radio"></span>ب) بسیار سریع و عجول هستم، صبر ندارم.</label></div>
+                    <div class="option"><input type="radio" id="q14c" name="q14" value="balghami"><label for="q14c"><span class="custom-radio"></span>ج) کند و آرام و بدون عجله هستم.</label></div>
+                    <div class="option"><input type="radio" id="q14d" name="q14" value="sudavi"><label for="q14d"><span class="custom-radio"></span>د) با دقت و وسواس زیاد ولی نه خیلی سریع.</label></div>
+                </div>
+            </div>
+            <div class="question-block">
+                <p class="question-text">15. در موقعیت‌های پرتنش چه رفتاری دارید؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q15a" name="q15" value="damavi"><label for="q15a"><span class="custom-radio"></span>الف) سعی می‌کنم دیگران را آرام کنم.</label></div>
+                    <div class="option"><input type="radio" id="q15b" name="q15" value="safravi"><label for="q15b"><span class="custom-radio"></span>ب) کنترل اوضاع را به دست می‌گیرم.</label></div>
+                    <div class="option"><input type="radio" id="q15c" name="q15" value="balghami"><label for="q15c"><span class="custom-radio"></span>ج) سعی می‌کنم از تنش دور شوم.</label></div>
+                    <div class="option"><input type="radio" id="q15d" name="q15" value="sudavi"><label for="q15d"><span class="custom-radio"></span>د) در درونم اضطراب زیادی حس می‌کنم.</label></div>
+                </div>
+            </div>
+            <div class="question-block">
+                <p class="question-text">16. به چه نوع فعالیت‌هایی علاقه‌مند هستید؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q16a" name="q16" value="damavi"><label for="q16a"><span class="custom-radio"></span>الف) مهمانی و تفریح گروهی.</label></div>
+                    <div class="option"><input type="radio" id="q16b" name="q16" value="safravi"><label for="q16b"><span class="custom-radio"></span>ب) رقابت و کارهای چالشی.</label></div>
+                    <div class="option"><input type="radio" id="q16c" name="q16" value="balghami"><label for="q16c"><span class="custom-radio"></span>ج) استراحت و کارهای ساده.</label></div>
+                    <div class="option"><input type="radio" id="q16d" name="q16" value="sudavi"><label for="q16d"><span class="custom-radio"></span>د) مطالعه، فکر کردن و خلوت.</label></div>
+                </div>
+            </div>
+            <div class="question-block">
+                <p class="question-text">17. پایداری هیجانات شما چگونه است؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q17a" name="q17" value="damavi"><label for="q17a"><span class="custom-radio"></span>الف) احساساتم نوسان دارد ولی زود متعادل می‌شود.</label></div>
+                    <div class="option"><input type="radio" id="q17b" name="q17" value="safravi"><label for="q17b"><span class="custom-radio"></span>ب) هیجاناتم شدید و گاهی غیرقابل کنترل است.</label></div>
+                    <div class="option"><input type="radio" id="q17c" name="q17" value="balghami"><label for="q17c"><span class="custom-radio"></span>ج) کمتر دچار هیجانات شدید می‌شوم.</label></div>
+                    <div class="option"><input type="radio" id="q17d" name="q17" value="sudavi"><label for="q17d"><span class="custom-radio"></span>د) اغلب غمگین یا مضطربم و دیر آرام می‌شوم.</label></div>
+                </div>
+            </div>
+            <div class="question-block">
+                <p class="question-text">18. در برابر نقد دیگران چه واکنشی دارید؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q18a" name="q18" value="damavi"><label for="q18a"><span class="custom-radio"></span>الف) با شوخی عبور می‌کنم.</label></div>
+                    <div class="option"><input type="radio" id="q18b" name="q18" value="safravi"><label for="q18b"><span class="custom-radio"></span>ب) تند برخورد می‌کنم.</label></div>
+                    <div class="option"><input type="radio" id="q18c" name="q18" value="balghami"><label for="q18c"><span class="custom-radio"></span>ج) سکوت می‌کنم و اهمیت نمی‌دهم.</label></div>
+                    <div class="option"><input type="radio" id="q18d" name="q18" value="sudavi"><label for="q18d"><span class="custom-radio"></span>د) ناراحت می‌شوم ولی ابراز نمی‌کنم.</label></div>
+                </div>
+            </div>
+            <div class="question-block">
+                <p class="question-text">19. آیا اهل برنامه‌ریزی و پیش‌بینی هستید؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q19a" name="q19" value="damavi"><label for="q19a"><span class="custom-radio"></span>الف) گاهی بله، ولی زیاد سخت نمی‌گیرم.</label></div>
+                    <div class="option"><input type="radio" id="q19b" name="q19" value="safravi"><label for="q19b"><span class="custom-radio"></span>ب) بله، دوست دارم همه چیز تحت کنترل من باشد.</label></div>
+                    <div class="option"><input type="radio" id="q19c" name="q19" value="balghami"><label for="q19c"><span class="custom-radio"></span>ج) نه چندان، بیشتر وابسته به شرایط هستم.</label></div>
+                    <div class="option"><input type="radio" id="q19d" name="q19" value="sudavi"><label for="q19d"><span class="custom-radio"></span>د) بله، همواره برنامه‌ریزی می‌کنم و وسواس دارم.</label></div>
+                </div>
+            </div>
+            <div class="question-block">
+                <p class="question-text">20. علاقه شما به گفتگوهای عاطفی و عمیق چگونه است؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q20a" name="q20" value="damavi"><label for="q20a"><span class="custom-radio"></span>الف) بیشتر اهل شوخی و بحث‌های سبک هستم.</label></div>
+                    <div class="option"><input type="radio" id="q20b" name="q20" value="safravi"><label for="q20b"><span class="custom-radio"></span>ب) گفتگوهای عملی و کاربردی را ترجیح می‌دهم.</label></div>
+                    <div class="option"><input type="radio" id="q20c" name="q20" value="balghami"><label for="q20c"><span class="custom-radio"></span>ج) زیاد اهل صحبت نیستم ولی گوش می‌دهم.</label></div>
+                    <div class="option"><input type="radio" id="q20d" name="q20" value="sudavi"><label for="q20d"><span class="custom-radio"></span>د) به گفتگوهای عمیق و فلسفی علاقه دارم.</label></div>
+                </div>
+            </div>
+
+
+            <h2>☀️❄️ دسته سوم: واکنش به شرایط محیطی</h2>
+            <div class="question-block">
+                <p class="question-text">21. در چه فصلی احساس بهتری دارید؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q21a" name="q21" value="damavi"><label for="q21a"><span class="custom-radio"></span>الف) بهار</label></div>
+                    <div class="option"><input type="radio" id="q21b" name="q21" value="safravi"><label for="q21b"><span class="custom-radio"></span>ب) پاییز</label></div>
+                    <div class="option"><input type="radio" id="q21c" name="q21" value="balghami"><label for="q21c"><span class="custom-radio"></span>ج) تابستان</label></div>
+                    <div class="option"><input type="radio" id="q21d" name="q21" value="sudavi"><label for="q21d"><span class="custom-radio"></span>د) زمستان</label></div>
+                </div>
+            </div>
+            <div class="question-block">
+                <p class="question-text">22. واکنش شما در برابر هوای گرم چگونه است؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q22a" name="q22" value="damavi"><label for="q22a"><span class="custom-radio"></span>الف) مشکلی ندارم، اما گاهی گرمازده می‌شوم.</label></div>
+                    <div class="option"><input type="radio" id="q22b" name="q22" value="safravi"><label for="q22b"><span class="custom-radio"></span>ب) به‌شدت کلافه و عصبی می‌شوم.</label></div>
+                    <div class="option"><input type="radio" id="q22c" name="q22" value="balghami"><label for="q22c"><span class="custom-radio"></span>ج) در گرما راحت‌ترم و احساس سبکی می‌کنم.</label></div>
+                    <div class="option"><input type="radio" id="q22d" name="q22" value="sudavi"><label for="q22d"><span class="custom-radio"></span>د) گرما مرا بی‌حال و ناتوان می‌کند.</label></div>
+                </div>
+            </div>
+            <div class="question-block">
+                <p class="question-text">23. در هوای سرد چگونه احساس می‌کنید؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q23a" name="q23" value="damavi"><label for="q23a"><span class="custom-radio"></span>الف) کمی سردم می‌شود اما قابل‌تحمل است.</label></div>
+                    <div class="option"><input type="radio" id="q23b" name="q23" value="safravi"><label for="q23b"><span class="custom-radio"></span>ب) با سرما کنار می‌آیم و اذیت نمی‌شوم.</label></div>
+                    <div class="option"><input type="radio" id="q23c" name="q23" value="balghami"><label for="q23c"><span class="custom-radio"></span>ج) به‌شدت از سرما فراری هستم.</label></div>
+                    <div class="option"><input type="radio" id="q23d" name="q23" value="sudavi"><label for="q23d"><span class="custom-radio"></span>د) سرما باعث بی‌حسی یا دردهای بدنی می‌شود.</label></div>
+                </div>
+            </div>
+             <div class="question-block">
+                <p class="question-text">24. بدن شما هنگام تغییرات آب‌و‌هوایی چه واکنشی نشان می‌دهد؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q24a" name="q24" value="damavi"><label for="q24a"><span class="custom-radio"></span>الف) زود سازگار می‌شود و زیاد حساس نیستم.</label></div>
+                    <div class="option"><input type="radio" id="q24b" name="q24" value="safravi"><label for="q24b"><span class="custom-radio"></span>ب) در روزهای خشک و بادخیز تحریک‌پذیرتر می‌شوم.</label></div>
+                    <div class="option"><input type="radio" id="q24c" name="q24" value="balghami"><label for="q24c"><span class="custom-radio"></span>ج) در روزهای مرطوب دچار بی‌حالی می‌شوم.</label></div>
+                    <div class="option"><input type="radio" id="q24d" name="q24" value="sudavi"><label for="q24d"><span class="custom-radio"></span>د) تغییر فصل به‌خصوص پاییز مرا مضطرب می‌کند.</label></div>
+                </div>
+            </div>
+             <div class="question-block">
+                <p class="question-text">25. تحمل شما نسبت به محیط‌های مرطوب چگونه است؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q25a" name="q25" value="damavi"><label for="q25a"><span class="custom-radio"></span>الف) باعث تعریق و کمی سنگینی بدنم می‌شود.</label></div>
+                    <div class="option"><input type="radio" id="q25b" name="q25" value="safravi"><label for="q25b"><span class="custom-radio"></span>ب) دچار خارش یا گرگرفتگی می‌شوم.</label></div>
+                    <div class="option"><input type="radio" id="q25c" name="q25" value="balghami"><label for="q25c"><span class="custom-radio"></span>ج) رطوبت را دوست دارم.</label></div>
+                    <div class="option"><input type="radio" id="q25d" name="q25" value="sudavi"><label for="q25d"><span class="custom-radio"></span>د) دچار سردی مفاصل و افسردگی می‌شوم.</label></div>
+                </div>
+            </div>
+             <div class="question-block">
+                <p class="question-text">26. در مواجهه با باد چه حسی دارید؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q26a" name="q26" value="damavi"><label for="q26a"><span class="custom-radio"></span>الف) فقط پوستم را خشک می‌کند، مشکلی ندارم.</label></div>
+                    <div class="option"><input type="radio" id="q26b" name="q26" value="safravi"><label for="q26b"><span class="custom-radio"></span>ب) سریع چشم و بینی‌ام خشک یا تحریک می‌شود.</label></div>
+                    <div class="option"><input type="radio" id="q26c" name="q26" value="balghami"><label for="q26c"><span class="custom-radio"></span>ج) از باد بدم می‌آید، مخصوصاً اگر سرد باشد.</label></div>
+                    <div class="option"><input type="radio" id="q26d" name="q26" value="sudavi"><label for="q26d"><span class="custom-radio"></span>د) باد باعث دل‌درد یا بی‌قراری‌ام می‌شود.</label></div>
+                </div>
+            </div>
+             <div class="question-block">
+                <p class="question-text">27. بعد از قرار گرفتن در آفتاب مستقیم چه حالتی پیدا می‌کنید؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q27a" name="q27" value="damavi"><label for="q27a"><span class="custom-radio"></span>الف) گرم و پرانرژی می‌شوم.</label></div>
+                    <div class="option"><input type="radio" id="q27b" name="q27" value="safravi"><label for="q27b"><span class="custom-radio"></span>ب) زود عصبی یا داغ می‌شوم.</label></div>
+                    <div class="option"><input type="radio" id="q27c" name="q27" value="balghami"><label for="q27c"><span class="custom-radio"></span>ج) احساس سبکی و راحتی می‌کنم.</label></div>
+                    <div class="option"><input type="radio" id="q27d" name="q27" value="sudavi"><label for="q27d"><span class="custom-radio"></span>د) دچار سرگیجه یا ضعف می‌شوم.</label></div>
+                </div>
+            </div>
+             <div class="question-block">
+                <p class="question-text">28. در سفر کدام آب‌و‌هوا را ترجیح می‌دهید؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q28a" name="q28" value="damavi"><label for="q28a"><span class="custom-radio"></span>الف) مناطق معتدل و سرسبز</label></div>
+                    <div class="option"><input type="radio" id="q28b" name="q28" value="safravi"><label for="q28b"><span class="custom-radio"></span>ب) مناطق خشک و کوهستانی</label></div>
+                    <div class="option"><input type="radio" id="q28c" name="q28" value="balghami"><label for="q28c"><span class="custom-radio"></span>ج) مناطق گرم و مرطوب</label></div>
+                    <div class="option"><input type="radio" id="q28d" name="q28" value="sudavi"><label for="q28d"><span class="custom-radio"></span>د) مناطق سرد و خنک</label></div>
+                </div>
+            </div>
+             <div class="question-block">
+                <p class="question-text">29. در تغییرات شدید آب‌و‌هوا، چه اختلالی بیشتر سراغ شما می‌آید؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q29a" name="q29" value="damavi"><label for="q29a"><span class="custom-radio"></span>الف) خستگی یا خواب‌آلودگی</label></div>
+                    <div class="option"><input type="radio" id="q29b" name="q29" value="safravi"><label for="q29b"><span class="custom-radio"></span>ب) بی‌قراری، بی‌خوابی یا خشکی پوست</label></div>
+                    <div class="option"><input type="radio" id="q29c" name="q29" value="balghami"><label for="q29c"><span class="custom-radio"></span>ج) درد مفاصل، کسالت و نفخ</label></div>
+                    <div class="option"><input type="radio" id="q29d" name="q29" value="sudavi"><label for="q29d"><span class="custom-radio"></span>د) افسردگی، اضطراب یا افکار منفی</label></div>
+                </div>
+            </div>
+             <div class="question-block">
+                <p class="question-text">30. واکنش شما به سرمای صبحگاهی چیست؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q30a" name="q30" value="damavi"><label for="q30a"><span class="custom-radio"></span>الف) با کمی پوشش حل می‌شود و مشکلی ندارم.</label></div>
+                    <div class="option"><input type="radio" id="q30b" name="q30" value="safravi"><label for="q30b"><span class="custom-radio"></span>ب) باعث گرفتگی عضلات و خشکی بینی می‌شود.</label></div>
+                    <div class="option"><input type="radio" id="q30c" name="q30" value="balghami"><label for="q30c"><span class="custom-radio"></span>ج) بسیار اذیت می‌شوم و انرژی ندارم.</label></div>
+                    <div class="option"><input type="radio" id="q30d" name="q30" value="sudavi"><label for="q30d"><span class="custom-radio"></span>د) بدنم منقبض و دچار سردی اندام‌ها می‌شود.</label></div>
+                </div>
+            </div>
+
+
+            <h2>🍽️ دسته چهارم: وضعیت گوارشی و تمایلات غذایی</h2>
+            <div class="question-block">
+                <p class="question-text">31. اشتها و میل به غذا خوردن شما چگونه است؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q31a" name="q31" value="damavi"><label for="q31a"><span class="custom-radio"></span>الف) اشتهای خوبی دارم ولی پرخوری نمی‌کنم.</label></div>
+                    <div class="option"><input type="radio" id="q31b" name="q31" value="safravi"><label for="q31b"><span class="custom-radio"></span>ب) گاهی بسیار گرسنه و گاهی بی‌اشتها هستم.</label></div>
+                    <div class="option"><input type="radio" id="q31c" name="q31" value="balghami"><label for="q31c"><span class="custom-radio"></span>ج) همیشه اشتهای زیادی دارم و مایل به پرخوری‌ام.</label></div>
+                    <div class="option"><input type="radio" id="q31d" name="q31" value="sudavi"><label for="q31d"><span class="custom-radio"></span>د) اشتهای کمی دارم، به‌خصوص هنگام ناراحتی.</label></div>
+                </div>
+            </div>
+            <div class="question-block">
+                <p class="question-text">32. بعد از خوردن غذا چه احساسی دارید؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q32a" name="q32" value="damavi"><label for="q32a"><span class="custom-radio"></span>الف) احساس سبکی و نشاط می‌کنم.</label></div>
+                    <div class="option"><input type="radio" id="q32b" name="q32" value="safravi"><label for="q32b"><span class="custom-radio"></span>ب) گاهی دچار سوزش معده یا تلخی دهان می‌شوم.</label></div>
+                    <div class="option"><input type="radio" id="q32c" name="q32" value="balghami"><label for="q32c"><span class="custom-radio"></span>ج) احساس سنگینی، نفخ یا خواب‌آلودگی دارم.</label></div>
+                    <div class="option"><input type="radio" id="q32d" name="q32" value="sudavi"><label for="q32d"><span class="custom-radio"></span>د) گاهی دل‌پیچه یا ترش می‌کنم.</label></div>
+                </div>
+            </div>
+             <div class="question-block">
+                <p class="question-text">33. به چه طعم‌هایی تمایل بیشتری دارید؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q33a" name="q33" value="damavi"><label for="q33a"><span class="custom-radio"></span>الف) طعم‌های شیرین و متعادل</label></div>
+                    <div class="option"><input type="radio" id="q33b" name="q33" value="safravi"><label for="q33b"><span class="custom-radio"></span>ب) طعم‌های ترش یا تند</label></div>
+                    <div class="option"><input type="radio" id="q33c" name="q33" value="balghami"><label for="q33c"><span class="custom-radio"></span>ج) طعم‌های شور و چرب</label></div>
+                    <div class="option"><input type="radio" id="q33d" name="q33" value="sudavi"><label for="q33d"><span class="custom-radio"></span>د) طعم‌های گس یا تلخ</label></div>
+                </div>
+            </div>
+             <div class="question-block">
+                <p class="question-text">34. تمایل شما به خوردن گوشت چگونه است؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q34a" name="q34" value="damavi"><label for="q34a"><span class="custom-radio"></span>الف) گوشت را دوست دارم.</label></div>
+                    <div class="option"><input type="radio" id="q34b" name="q34" value="safravi"><label for="q34b"><span class="custom-radio"></span>ب) گاهی دوست دارم ولی زود دل‌زده می‌شوم.</label></div>
+                    <div class="option"><input type="radio" id="q34c" name="q34" value="balghami"><label for="q34c"><span class="custom-radio"></span>ج) میل زیادی به گوشت دارم.</label></div>
+                    <div class="option"><input type="radio" id="q34d" name="q34" value="sudavi"><label for="q34d"><span class="custom-radio"></span>د) زیاد گوشت نمی‌خورم.</label></div>
+                </div>
+            </div>
+             <div class="question-block">
+                <p class="question-text">35. تمایل شما به خوردن شیرینی‌جات چگونه است؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q35a" name="q35" value="damavi"><label for="q35a"><span class="custom-radio"></span>الف) در حد متعادل دوست دارم.</label></div>
+                    <div class="option"><input type="radio" id="q35b" name="q35" value="safravi"><label for="q35b"><span class="custom-radio"></span>ب) تمایلی ندارم یا زود دل‌زده می‌شوم.</label></div>
+                    <div class="option"><input type="radio" id="q35c" name="q35" value="balghami"><label for="q35c"><span class="custom-radio"></span>ج) بسیار علاقه‌مندم.</label></div>
+                    <div class="option"><input type="radio" id="q35d" name="q35" value="sudavi"><label for="q35d"><span class="custom-radio"></span>د) گاهی به شیرینی‌های خاص میل دارم.</label></div>
+                </div>
+            </div>
+             <div class="question-block">
+                <p class="question-text">36. چند بار در روز احساس گرسنگی می‌کنید؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q36a" name="q36" value="damavi"><label for="q36a"><span class="custom-radio"></span>الف) سه وعده در روز</label></div>
+                    <div class="option"><input type="radio" id="q36b" name="q36" value="safravi"><label for="q36b"><span class="custom-radio"></span>ب) یک یا دو وعده</label></div>
+                    <div class="option"><input type="radio" id="q36c" name="q36" value="balghami"><label for="q36c"><span class="custom-radio"></span>ج) تقریباً همیشه گرسنه‌ام.</label></div>
+                    <div class="option"><input type="radio" id="q36d" name="q36" value="sudavi"><label for="q36d"><span class="custom-radio"></span>د) گاهی اصلاً گرسنه نمی‌شوم.</label></div>
+                </div>
+            </div>
+             <div class="question-block">
+                <p class="question-text">37. نوشیدن آب برای شما چگونه است؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q37a" name="q37" value="damavi"><label for="q37a"><span class="custom-radio"></span>الف) میزان نرمالی آب می‌نوشم.</label></div>
+                    <div class="option"><input type="radio" id="q37b" name="q37" value="safravi"><label for="q37b"><span class="custom-radio"></span>ب) زیاد تشنه می‌شوم.</label></div>
+                    <div class="option"><input type="radio" id="q37c" name="q37" value="balghami"><label for="q37c"><span class="custom-radio"></span>ج) میل زیادی به نوشیدن آب ندارم.</label></div>
+                    <div class="option"><input type="radio" id="q37d" name="q37" value="sudavi"><label for="q37d"><span class="custom-radio"></span>د) زیاد آب نمی‌خورم، ولی دهانم خشک می‌شود.</label></div>
+                </div>
+            </div>
+             <div class="question-block">
+                <p class="question-text">38. سرعت گوارش و هضم غذا در شما چگونه است؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q38a" name="q38" value="damavi"><label for="q38a"><span class="custom-radio"></span>الف) هضم غذا مناسب و طبیعی است.</label></div>
+                    <div class="option"><input type="radio" id="q38b" name="q38" value="safravi"><label for="q38b"><span class="custom-radio"></span>ب) گاهی سریع و گاهی ناقص است.</label></div>
+                    <div class="option"><input type="radio" id="q38c" name="q38" value="balghami"><label for="q38c"><span class="custom-radio"></span>ج) هضم کندی دارم.</label></div>
+                    <div class="option"><input type="radio" id="q38d" name="q38" value="sudavi"><label for="q38d"><span class="custom-radio"></span>د) هضم غذا سخت است.</label></div>
+                </div>
+            </div>
+             <div class="question-block">
+                <p class="question-text">39. تمایل شما به خوردن سالاد و سبزیجات چگونه است؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q39a" name="q39" value="damavi"><label for="q39a"><span class="custom-radio"></span>الف) در حد معمول مصرف می‌کنم.</label></div>
+                    <div class="option"><input type="radio" id="q39b" name="q39" value="safravi"><label for="q39b"><span class="custom-radio"></span>ب) سالاد و ترشی‌جات را دوست دارم.</label></div>
+                    <div class="option"><input type="radio" id="q39c" name="q39" value="balghami"><label for="q39c"><span class="custom-radio"></span>ج) خیلی علاقه ندارم و غذای پخته ترجیح می‌دهم.</label></div>
+                    <div class="option"><input type="radio" id="q39d" name="q39" value="sudavi"><label for="q39d"><span class="custom-radio"></span>د) بیشتر سبزی‌های خشک یا دارویی مصرف می‌کنم.</label></div>
+                </div>
+            </div>
+             <div class="question-block">
+                <p class="question-text">40. مصرف لبنیات برای شما چه تأثیری دارد؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q40a" name="q40" value="damavi"><label for="q40a"><span class="custom-radio"></span>الف) معمولاً مشکلی ایجاد نمی‌کند.</label></div>
+                    <div class="option"><input type="radio" id="q40b" name="q40" value="safravi"><label for="q40b"><span class="custom-radio"></span>ب) گاهی باعث نفخ یا اسهال می‌شود.</label></div>
+                    <div class="option"><input type="radio" id="q40c" name="q40" value="balghami"><label for="q40c"><span class="custom-radio"></span>ج) باعث خواب‌آلودگی و سنگینی می‌شود.</label></div>
+                    <div class="option"><input type="radio" id="q40d" name="q40" value="sudavi"><label for="q40d"><span class="custom-radio"></span>د) باعث سردی، یبوست یا دل‌درد می‌شود.</label></div>
+                </div>
+            </div>
+
+            <h2>🩺 دسته پنجم: نشانه‌های اختصاصی و علائم بالینی</h2>
+             <div class="question-block">
+                <p class="question-text">41. حالت زبان شما در حالت عادی چگونه است؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q41a" name="q41" value="damavi"><label for="q41a"><span class="custom-radio"></span>الف) رنگ صورتی طبیعی و مرطوب</label></div>
+                    <div class="option"><input type="radio" id="q41b" name="q41" value="safravi"><label for="q41b"><span class="custom-radio"></span>ب) نوک قرمز، گاهی زردرنگ</label></div>
+                    <div class="option"><input type="radio" id="q41c" name="q41" value="balghami"><label for="q41c"><span class="custom-radio"></span>ج) پهن و سفیدرنگ با لایه‌ای ضخیم</label></div>
+                    <div class="option"><input type="radio" id="q41d" name="q41" value="sudavi"><label for="q41d"><span class="custom-radio"></span>د) باریک، تیره یا بنفش با ترک</label></div>
+                </div>
+            </div>
+             <div class="question-block">
+                <p class="question-text">42. نبض شما چگونه است؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q42a" name="q42" value="damavi"><label for="q42a"><span class="custom-radio"></span>الف) قوی، منظم و پرشدار</label></div>
+                    <div class="option"><input type="radio" id="q42b" name="q42" value="safravi"><label for="q42b"><span class="custom-radio"></span>ب) تند و ضربه‌ای</label></div>
+                    <div class="option"><input type="radio" id="q42c" name="q42" value="balghami"><label for="q42c"><span class="custom-radio"></span>ج) آهسته و نرم</label></div>
+                    <div class="option"><input type="radio" id="q42d" name="q42" value="sudavi"><label for="q42d"><span class="custom-radio"></span>د) باریک، ضعیف یا نامنظم</label></div>
+                </div>
+            </div>
+             <div class="question-block">
+                <p class="question-text">43. مدفوع شما معمولاً چه حالتی دارد؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q43a" name="q43" value="damavi"><label for="q43a"><span class="custom-radio"></span>الف) نرمال و شکل‌دار، با دفع راحت</label></div>
+                    <div class="option"><input type="radio" id="q43b" name="q43" value="safravi"><label for="q43b"><span class="custom-radio"></span>ب) خشک یا همراه با سوزش و گاهی اسهال</label></div>
+                    <div class="option"><input type="radio" id="q43c" name="q43" value="balghami"><label for="q43c"><span class="custom-radio"></span>ج) شل و چرب، گاهی با بلغم</label></div>
+                    <div class="option"><input type="radio" id="q43d" name="q43" value="sudavi"><label for="q43d"><span class="custom-radio"></span>د) سفت، تیره‌رنگ، گاهی با یبوست</label></div>
+                </div>
+            </div>
+             <div class="question-block">
+                <p class="question-text">44. احساس غالب در زمان بیدار شدن از خواب چیست؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q44a" name="q44" value="damavi"><label for="q44a"><span class="custom-radio"></span>الف) سرحال و با انرژی</label></div>
+                    <div class="option"><input type="radio" id="q44b" name="q44" value="safravi"><label for="q44b"><span class="custom-radio"></span>ب) خشک‌لب، دهان تلخ و بی‌قرار</label></div>
+                    <div class="option"><input type="radio" id="q44c" name="q44" value="balghami"><label for="q44c"><span class="custom-radio"></span>ج) خواب‌آلود، سنگین و کسل</label></div>
+                    <div class="option"><input type="radio" id="q44d" name="q44" value="sudavi"><label for="q44d"><span class="custom-radio"></span>د) سردی بدن و خستگی ذهنی</label></div>
+                </div>
+            </div>
+             <div class="question-block">
+                <p class="question-text">45. ضربان قلب شما در حالت استراحت معمولاً چگونه است؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q45a" name="q45" value="damavi"><label for="q45a"><span class="custom-radio"></span>الف) نرمال و آرام</label></div>
+                    <div class="option"><input type="radio" id="q45b" name="q45" value="safravi"><label for="q45b"><span class="custom-radio"></span>ب) تند و ناپایدار</label></div>
+                    <div class="option"><input type="radio" id="q45c" name="q45" value="balghami"><label for="q45c"><span class="custom-radio"></span>ج) کند و آرام</label></div>
+                    <div class="option"><input type="radio" id="q45d" name="q45" value="sudavi"><label for="q45d"><span class="custom-radio"></span>د) نامنظم یا با تپش‌های پراکنده</label></div>
+                </div>
+            </div>
+             <div class="question-block">
+                <p class="question-text">46. وضعیت پوست و ناخن‌های شما چگونه است؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q46a" name="q46" value="damavi"><label for="q46a"><span class="custom-radio"></span>الف) پوست شفاف و ناخن‌های سالم</label></div>
+                    <div class="option"><input type="radio" id="q46b" name="q46" value="safravi"><label for="q46b"><span class="custom-radio"></span>ب) پوست زبر، ناخن‌های شکننده یا زرد</label></div>
+                    <div class="option"><input type="radio" id="q46c" name="q46" value="balghami"><label for="q46c"><span class="custom-radio"></span>ج) پوست سفید و سرد، ناخن‌های رنگ‌پریده</label></div>
+                    <div class="option"><input type="radio" id="q46d" name="q46" value="sudavi"><label for="q46d"><span class="custom-radio"></span>د) پوست خشک و تیره، ناخن‌های خط‌دار</label></div>
+                </div>
+            </div>
+             <div class="question-block">
+                <p class="question-text">47. موهای بدن (به‌ویژه در مردان) چگونه رشد می‌کند؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q47a" name="q47" value="damavi"><label for="q47a"><span class="custom-radio"></span>الف) رشد متوسط و موزون</label></div>
+                    <div class="option"><input type="radio" id="q47b" name="q47" value="safravi"><label for="q47b"><span class="custom-radio"></span>ب) سریع و زیاد، موها خشک و زبر</label></div>
+                    <div class="option"><input type="radio" id="q47c" name="q47" value="balghami"><label for="q47c"><span class="custom-radio"></span>ج) رشد کم، موها نرم و نازک</label></div>
+                    <div class="option"><input type="radio" id="q47d" name="q47" value="sudavi"><label for="q47d"><span class="custom-radio"></span>د) رشد کم یا موضعی و شکننده</label></div>
+                </div>
+            </div>
+             <div class="question-block">
+                <p class="question-text">48. عادت ماهیانه (در زنان) یا میل جنسی (در مردان) چگونه است؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q48a" name="q48" value="damavi"><label for="q48a"><span class="custom-radio"></span>الف) نرمال و متعادل</label></div>
+                    <div class="option"><input type="radio" id="q48b" name="q48" value="safravi"><label for="q48b"><span class="custom-radio"></span>ب) تمایل زیاد، اما با نوسان</label></div>
+                    <div class="option"><input type="radio" id="q48c" name="q48" value="balghami"><label for="q48c"><span class="custom-radio"></span>ج) تمایل کم، ولی با ثبات</label></div>
+                    <div class="option"><input type="radio" id="q48d" name="q48" value="sudavi"><label for="q48d"><span class="custom-radio"></span>د) کاهش شدید میل یا اختلال در سیکل‌ها</label></div>
+                </div>
+            </div>
+             <div class="question-block">
+                <p class="question-text">49. وضعیت خواب شبانه چگونه است؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q49a" name="q49" value="damavi"><label for="q49a"><span class="custom-radio"></span>الف) خواب آرام و منظم</label></div>
+                    <div class="option"><input type="radio" id="q49b" name="q49" value="safravi"><label for="q49b"><span class="custom-radio"></span>ب) خواب کم یا همراه با کابوس</label></div>
+                    <div class="option"><input type="radio" id="q49c" name="q49" value="balghami"><label for="q49c"><span class="custom-radio"></span>ج) خواب سنگین، طولانی</label></div>
+                    <div class="option"><input type="radio" id="q49d" name="q49" value="sudavi"><label for="q49d"><span class="custom-radio"></span>د) بی‌خوابی مزمن یا خواب پر از فکر</label></div>
+                </div>
+            </div>
+             <div class="question-block">
+                <p class="question-text">50. وضعیت حافظه و تمرکز شما چگونه است؟</p>
+                <div class="options">
+                    <div class="option"><input type="radio" id="q50a" name="q50" value="damavi"><label for="q50a"><span class="custom-radio"></span>الف) حافظه قوی و تمرکز خوب</label></div>
+                    <div class="option"><input type="radio" id="q50b" name="q50" value="safravi"><label for="q50b"><span class="custom-radio"></span>ب) ذهن تیز ولی حواس‌پرتی زیاد</label></div>
+                    <div class="option"><input type="radio" id="q50c" name="q50" value="balghami"><label for="q50c"><span class="custom-radio"></span>ج) فراموشی موقت و کندی ذهن</label></div>
+                    <div class="option"><input type="radio" id="q50d" name="q50" value="sudavi"><label for="q50d"><span class="custom-radio"></span>د) حافظه خوب اما پر از فکر و وسواس</label></div>
+                </div>
+            </div>
+
+
+            <button type="submit" class="submit-btn">ارسال و تحلیل نتیجه</button>
+        </form>
+
+        <div id="result-container">
+            <h2>نتیجه آزمون مزاج شما</h2>
+            <p id="dominant-mezaj-text" class="dominant-mezaj"></p>
+            <p id="result-description" class="result-description"></p>
+            <div class="all-scores">
+                <div class="score-card">
+                    <h3 class="mezaj-damavi">دموی</h3>
+                    <p id="damavi-score" class="mezaj-damavi">0</p>
+                </div>
+                <div class="score-card">
+                    <h3 class="mezaj-safravi">صفراوی</h3>
+                    <p id="safravi-score" class="mezaj-safravi">0</p>
+                </div>
+                 <div class="score-card">
+                    <h3 class="mezaj-balghami">بلغمی</h3>
+                    <p id="balghami-score" class="mezaj-balghami">0</p>
+                </div>
+                <div class="score-card">
+                    <h3 class="mezaj-sudavi">سوداوی</h3>
+                    <p id="sudavi-score" class="mezaj-sudavi">0</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.getElementById('quiz-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent actual form submission
+
+            const totalQuestions = 50;
+            const scores = {
+                damavi: 0,
+                safravi: 0,
+                balghami: 0,
+                sudavi: 0
+            };
+
+            const formData = new FormData(event.target);
+            let answeredQuestions = 0;
+            for (let [name, value] of formData.entries()) {
+                if (scores.hasOwnProperty(value)) {
+                    scores[value]++;
+                }
+                answeredQuestions++;
+            }
+
+            if (answeredQuestions < totalQuestions) {
+                alert('لطفاً به تمام ۵۰ سوال پاسخ دهید تا تحلیل دقیق انجام شود.');
+                return;
+            }
+
+            // Display scores
+            document.getElementById('damavi-score').textContent = scores.damavi;
+            document.getElementById('safravi-score').textContent = scores.safravi;
+            document.getElementById('balghami-score').textContent = scores.balghami;
+            document.getElementById('sudavi-score').textContent = scores.sudavi;
+            
+            // Find dominant mezaj
+            let dominantMezaj = '';
+            let maxScore = -1;
+
+            for (const mezaj in scores) {
+                if (scores[mezaj] > maxScore) {
+                    maxScore = scores[mezaj];
+                    dominantMezaj = mezaj;
+                }
+            }
+
+            const descriptions = {
+                damavi: {
+                    title: 'دموی (گرم و تر)',
+                    text: 'شما فردی خوش‌رو، اجتماعی، پرانرژی و معمولاً دارای بدنی قوی و عضلانی هستید. رهبران و مدیران خوبی می‌شوید و از اعتماد به نفس بالایی برخوردارید. برای حفظ تعادل، از مصرف بیش از حد شیرینی‌ها و غذاهای چرب پرهیز کنید.',
+                    className: 'mezaj-damavi'
+                },
+                safravi: {
+                    title: 'صفراوی (گرم و خشک)',
+                    text: 'شما فردی مصمم، سریع، پرتحرک و گاهی عجول و تندخو هستید. ذهن تیزی دارید و در کارها قاطع عمل می‌کنید. برای حفظ تعادل، از هوای گرم و غذاهای تند و خشک دوری کرده و خوراکی‌های خنک مانند کاهو و خیار مصرف کنید.',
+                    className: 'mezaj-safravi'
+                },
+                balghami: {
+                    title: 'بلغمی (سرد و تر)',
+                    text: 'شما فردی آرام، صبور، کند و معمولاً دارای استعداد چاقی هستید. حافظه خوبی دارید اما گاهی کم‌انرژی و خواب‌آلود هستید. برای حفظ تعادل، از مصرف لبنیات، ترشی‌ها و هوای سرد پرهیز کرده و ورزش منظم و مصرف غذاهای گرم مانند عسل و زنجبیل را در برنامه خود قرار دهید.',
+                    className: 'mezaj-balghami'
+                },
+                sudavi: {
+                    title: 'سوداوی (سرد و خشک)',
+                    text: 'شما فردی دقیق، منظم، متفکر و گاهی مضطرب و درون‌گرا هستید. به مسائل عمیق و فلسفی علاقه دارید اما مستعد افکار منفی و یبوست هستید. برای حفظ تعادل، از تنهایی و غذاهای سرد و مانده پرهیز کنید و غذاهای گرم و تر مانند گوشت گوسفند و شیره انگور مصرف نمایید.',
+                    className: 'mezaj-sudavi'
+                }
+            };
+
+            const resultContainer = document.getElementById('result-container');
+            const dominantMezajText = document.getElementById('dominant-mezaj-text');
+            const resultDescription = document.getElementById('result-description');
+
+            const resultInfo = descriptions[dominantMezaj];
+
+            dominantMezajText.textContent = `مزاج غالب شما: ${resultInfo.title}`;
+            dominantMezajText.className = `dominant-mezaj ${resultInfo.className}`;
+            resultDescription.textContent = resultInfo.text;
+            resultContainer.style.borderColor = getComputedStyle(document.documentElement).getPropertyValue(`--${resultInfo.className.split('-')[1]}-color`);
+
+
+            resultContainer.style.display = 'block';
+            resultContainer.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
+```
