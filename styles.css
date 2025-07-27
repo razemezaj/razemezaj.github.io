@@ -1,0 +1,131 @@
+/* Basic styling for the traditional medicine website */
+
+/* Reset and box-sizing */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Tahoma", Arial, sans-serif;
+  line-height: 1.6;
+  background-color: #fefefe;
+  color: #333;
+  direction: rtl;
+}
+
+/* Header and navigation */
+.site-header {
+  background-color: #2d572c; /* deep green reminiscent of plants */
+  color: #ffffff;
+  padding: 1rem 0.5rem;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.main-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.main-nav li {
+  margin: 0;
+}
+
+.main-nav a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.main-nav a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.header-content h1 {
+  margin: 0.5rem 0 0;
+  font-size: 2rem;
+}
+
+.header-content p {
+  margin: 0.25rem 0 0;
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+/* Main content area */
+.content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.content section {
+  margin-bottom: 2.5rem;
+}
+
+.content h2 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #2d572c;
+  font-size: 1.6rem;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 0.4rem;
+}
+
+.content p {
+  margin: 0.8rem 0;
+  line-height: 1.8;
+}
+
+.content a {
+  color: #006400; /* dark green for links */
+}
+
+figure {
+  margin: 1.2rem 0;
+  text-align: center;
+}
+
+figure img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+figcaption {
+  font-size: 0.85rem;
+  margin-top: 0.4rem;
+  color: #555555;
+}
+
+/* Sources list */
+#sources ol {
+  padding-right: 1.2rem;
+}
+
+#sources li {
+  margin: 0.4rem 0;
+  line-height: 1.6;
+}
+
+.site-footer {
+  background-color: #f4f4f4;
+  padding: 1rem 0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #555555;
+  border-top: 1px solid #e0e0e0;
+}
